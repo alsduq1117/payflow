@@ -1,33 +1,21 @@
-<script setup lang="ts">
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function goToTutorial() {
+  router.push('/tutorial')
+}
 </script>
 
 <template>
-  <div class="greetings">
-    123123123
-  </div>
+  <button
+    @click="goToTutorial"
+    class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded"
+  >
+    튜토리얼 가기
+  </button>
 </template>
 
 <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
-}
 </style>
