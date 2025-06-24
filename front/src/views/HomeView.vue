@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import HelloWorld from '../components/HelloWorld.vue'
+import PaymentButton from "@/components/PaymentButton.vue";
 </script>
 
 <template>
   <main>
-    <HelloWorld />
+    <PaymentButton />
   </main>
 </template>
