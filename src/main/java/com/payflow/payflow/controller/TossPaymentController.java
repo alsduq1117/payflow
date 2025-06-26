@@ -1,7 +1,6 @@
-package com.payflow.payflow.controller.toss;
+package com.payflow.payflow.controller;
 
 import com.payflow.payflow.dto.request.TossPaymentConfirmRequest;
-import com.payflow.payflow.dto.response.PaymentConfirmationResult;
 import com.payflow.payflow.service.PaymentConfirmService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
