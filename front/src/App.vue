@@ -6,7 +6,7 @@ import Footer from "@/components/Footer.vue";
 <template>
   <v-app>
     <Header />
-    <v-main>
+    <v-main style="background-color: #ffffff">
       <router-view/>
     </v-main>
     <Footer />

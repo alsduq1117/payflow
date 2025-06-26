@@ -10,9 +10,9 @@
         <p class="demo-alert">💡 비상업적 목적의 데모 사이트로 실제 결제가 이루어지지 않습니다.</p>
       </div>
       <div class="footer-links">
-        <p><strong>📧 Email:</strong> dev.yeji@example.com</p>
-        <p><strong>📝 Blog:</strong> blog.payflow.dev</p>
-        <p><strong>💻 GitHub:</strong> github.com/yeji-dev/payflow</p>
+        <p><strong>📧 Email:</strong> alsduq1117@gmail.com</p>
+        <p><strong>📝 Blog:</strong> https://kirminov.tistory.com/</p>
+        <p><strong>💻 GitHub:</strong> https://github.com/alsduq1117</p>
       </div>
     </div>
     <div class="footer-bottom">
