@@ -1,6 +1,5 @@
 package com.payflow.payflow.client;
 
-import com.payflow.payflow.config.FeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
