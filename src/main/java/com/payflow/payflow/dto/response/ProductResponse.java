@@ -32,6 +32,18 @@ public class ProductResponse {
         this.sellerId = sellerId;
     }
 
+    public ProductResponse(Product product) {
+        this.id = product.getId();
+        this.name = product.getName();
+        this.price = product.getPrice();
+        this.fileUrl = product.getFileUrl();
+        this.thumbnailUrl = product.getThumbnailUrl();
+        this.description = product.getDescription();
+        this.sellerId = product.getSellerId();
+    }
+
+
+
     public static ProductResponse from(Product product) {
         return ProductResponse.builder()
                 .id(product.getId())

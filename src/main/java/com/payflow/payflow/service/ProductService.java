@@ -31,7 +31,8 @@ public class ProductService {
                 .price(productCreate.getPrice())
                 .fileUrl(productCreate.getFileUrl())
                 .thumbnailUrl(productCreate.getThumbnailUrl())
-                .build();// task : UserPricipal 로 부터 sellerId 받아오기
+                .sellerId(1L) // task : UserPricipal 로 부터 sellerId 받아오기
+                .build();
 
         productRepository.save(product);
 

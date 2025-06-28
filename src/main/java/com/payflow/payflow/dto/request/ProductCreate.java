@@ -27,4 +27,12 @@ public class ProductCreate {
 
     private String description;
 
+
+    public ProductCreate(String name, Integer price, String fileUrl, String thumbnailUrl, String description) {
+        this.name = name;
+        this.price = price;
+        this.fileUrl = fileUrl;
+        this.thumbnailUrl = thumbnailUrl;
+        this.description = description;
+    }
 }
