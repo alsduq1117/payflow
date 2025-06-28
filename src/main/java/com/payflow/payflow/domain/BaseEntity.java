@@ -1,4 +1,4 @@
-package com.payflow.payflow.entity;
+package com.payflow.payflow.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

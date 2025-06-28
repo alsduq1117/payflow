@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductEdit {
 
-    private String productName;
+    private String name;
 
-    private Long price;
+    private Integer price;
 
     private String fileUrl;
 

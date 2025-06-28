@@ -1,4 +1,4 @@
-package com.payflow.payflow.entity;
+package com.payflow.payflow.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductEditor {
 
-    private String productName;
+    private String name;
 
-    private Long price;
+    private Integer price;
 
     private String fileUrl;
 
@@ -19,8 +19,8 @@ public class ProductEditor {
     private String description;
 
     @Builder
-    public ProductEditor(String productName, Long price, String fileUrl, String thumbnailUrl, String description, Long sellerId) {
-        this.productName = productName;
+    public ProductEditor(String name, Integer price, String fileUrl, String thumbnailUrl, String description) {
+        this.name = name;
         this.price = price;
         this.fileUrl = fileUrl;
         this.thumbnailUrl = thumbnailUrl;

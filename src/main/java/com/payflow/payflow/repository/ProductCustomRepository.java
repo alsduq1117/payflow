@@ -1,6 +1,6 @@
 package com.payflow.payflow.repository;
 
-import com.payflow.payflow.entity.Product;
+import com.payflow.payflow.domain.Product;
 import com.payflow.payflow.dto.request.ProductPageRequest;
 import org.springframework.data.domain.Page;
 

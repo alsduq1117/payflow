@@ -5,8 +5,8 @@ import com.payflow.payflow.dto.request.ProductEdit;
 import com.payflow.payflow.dto.request.ProductPageRequest;
 import com.payflow.payflow.dto.response.PagingResponse;
 import com.payflow.payflow.dto.response.ProductResponse;
-import com.payflow.payflow.entity.Product;
-import com.payflow.payflow.entity.ProductEditor;
+import com.payflow.payflow.domain.Product;
+import com.payflow.payflow.dto.request.ProductEditor;
 import com.payflow.payflow.exception.ProductNotFound;
 import com.payflow.payflow.repository.ProductRepository;
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ public class ProductService {
     @Transactional
     public ProductResponse create(ProductCreate productCreate) {
         Product product = Product.builder()
-                .productName(productCreate.getProductName())
+                .name(productCreate.getName())
                 .description(productCreate.getDescription())
                 .price(productCreate.getPrice())
                 .price(productCreate.getPrice())
@@ -56,7 +56,7 @@ public class ProductService {
         ProductEditor.ProductEditorBuilder productEditorBuilder = product.toEditor();
 
         ProductEditor productEditor = productEditorBuilder
-                .productName(productEdit.getProductName())
+                .name(productEdit.getName())
                 .price(productEdit.getPrice())
                 .description(productEdit.getDescription())
                 .price(productEdit.getPrice())

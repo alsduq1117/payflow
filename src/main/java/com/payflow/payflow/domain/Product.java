@@ -1,5 +1,6 @@
-package com.payflow.payflow.entity;
+package com.payflow.payflow.domain;
 
+import com.payflow.payflow.dto.request.ProductEditor;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,9 +21,9 @@ public class Product extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String productName;
+    private String name;
 
-    private Long price;
+    private Integer price;
 
     private String fileUrl;
 
@@ -36,8 +37,8 @@ public class Product extends BaseEntity {
     private LocalDateTime deletedAt;
 
     @Builder
-    public Product(String productName, Long price, String fileUrl, String thumbnailUrl, String description, Long sellerId) {
-        this.productName = productName;
+    public Product(String name, Integer price, String fileUrl, String thumbnailUrl, String description, Long sellerId) {
+        this.name = name;
         this.price = price;
         this.fileUrl = fileUrl;
         this.thumbnailUrl = thumbnailUrl;
@@ -49,7 +50,7 @@ public class Product extends BaseEntity {
     public ProductEditor.ProductEditorBuilder toEditor() {
 
         return ProductEditor.builder()
-                .productName(productName)
+                .name(name)
                 .price(price)
                 .fileUrl(fileUrl)
                 .thumbnailUrl(thumbnailUrl)
@@ -57,7 +58,7 @@ public class Product extends BaseEntity {
     }
 
     public void edit(ProductEditor productEditor) {
-        this.productName = productEditor.getProductName();
+        this.name = productEditor.getName();
         this.price = productEditor.getPrice();
         this.fileUrl = productEditor.getFileUrl();
         this.thumbnailUrl = productEditor.getThumbnailUrl();
