@@ -1,26 +1,26 @@
 package com.payflow.payflow.client.s3;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/s3")
+@Slf4j
 public class S3Controller {
 
-    private final S3Service s3Service;
+    private final S3PresignService s3PresignService;
 
-    /**
-     * S3에 파일 업로드 후, 해당 파일의 접근 URL 반환
-     */
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("path") String path) {
-        String uploadedUrl = s3Service.uploadFile(file, path);
-        return ResponseEntity.ok(uploadedUrl);
+    @PostMapping("/presigned-url")
+    public ResponseEntity<String> generatePresignedUrl(@RequestParam String fileName, @RequestParam String contentType, @RequestParam String folder) {
+        log.info("Generate presigned url for file: " + fileName);
+        String url = s3PresignService.generatePresignedUrl(fileName, contentType, folder);
+        log.info(url);
+        return ResponseEntity.ok(url);
     }
 }

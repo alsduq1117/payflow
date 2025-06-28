@@ -30,7 +30,7 @@ onUnmounted(() => {
         <router-link to="/" class="logo-text text-decoration-none">Payflow</router-link>
 
         <!-- 메뉴 버튼 -->
-        <v-btn text to="/guide" class="nav-button">상품</v-btn>
+        <v-btn text to="/product-create" class="nav-button">상품 등록</v-btn>
         <v-btn text to="/api" class="nav-button">장바구니</v-btn>
         <v-btn text to="/sandbox" class="nav-button">샌드박스</v-btn>
         <v-btn text to="/support" class="nav-button">커뮤니티·지원</v-btn>
