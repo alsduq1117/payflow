@@ -78,3 +78,16 @@ PSP:
   toss:
     secretKey: test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6
     url: https://api.tosspayments.com
+
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIA4VBL553M4KWHTLPU
+      secret-key: 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
+    s3:
+      bucket: payflow-uploads
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: 'false'
