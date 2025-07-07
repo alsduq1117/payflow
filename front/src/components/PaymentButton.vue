@@ -39,8 +39,10 @@ const handleCheckout = async () => {
 </script>
 
 <template>
-  <v-btn @click="handleCheckout" color="#1E88E5" class="px-8 py-3 text-subtitle-1 font-weight-bold" style="border-radius: 10px;" elevation="3">
+  <v-btn @click="handleCheckout">
     결제하기
   </v-btn>
 </template>
+
+
 
