@@ -4,10 +4,8 @@ import com.payflow.payflow.client.TossFeignClient;
 import com.payflow.payflow.dto.request.TossPaymentConfirmRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;

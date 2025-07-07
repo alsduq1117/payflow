@@ -1,8 +1,14 @@
 package com.payflow.payflow.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+import java.util.Arrays;
 
 @Getter
+@RequiredArgsConstructor
 public enum PaymentStatus {
     NOT_STARTED("결제 승인 시작 전"),
     EXECUTING("결제 승인 중"),
@@ -10,18 +16,19 @@ public enum PaymentStatus {
     FAILURE("결제 승인 실패"),
     UNKNOWN("결제 승인 알 수 없는 상태");
 
-    private final String description;
+    private final String value;
 
-    PaymentStatus(String description) {
-        this.description = description;
+    @JsonValue
+    public String getValue() {
+        return value;
     }
 
-    public static PaymentStatus get(String status) {
-        for (PaymentStatus s : values()) {
-            if (s.name().equals(status)) {
-                return s;
-            }
-        }
-        throw new IllegalArgumentException("PaymentStatus: " + status + " 는 올바르지 않은 결제 상태입니다.");
+    @JsonCreator
+    public static PaymentStatus of(String value) {
+        return Arrays.stream(values())
+                .filter(v -> v.value.equalsIgnoreCase(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid PaymentStatus: " + value));
     }
+
 }
