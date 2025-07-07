@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import {ref, onMounted} from 'vue'
 import axios from 'axios'
 
 interface Product {
@@ -37,7 +37,7 @@ onMounted(fetchProducts)
         sm="6"
         md="3"
       >
-        <v-card class="product-card pa-5">
+        <v-card class="product-card pa-5" :to="`/product/${product.id}`" tag="router-link" hover>
           <!-- 이미지: 서버의 thumbnailUrl 사용 -->
           <v-img
             :src="product.thumbnailUrl"

@@ -1,18 +1,46 @@
-<script setup>
-const openCheckout = (orderId, amount, orderName) => {
-  const params = new URLSearchParams({
-    orderId,
-    amount: amount.toString(),
-    orderName
-  }).toString();
+<script setup lang="ts">
 
-  window.open(`/checkout.html?${params}`, '_blank', 'width=500, height=700')
+const props = defineProps<{
+  buyerId: number
+  productIds: number[]
+}>()
+
+const openCheckout = (orderId, amount, orderName) => {
+  window.open(`/checkout.html?orderId=${orderId}&amount=${amount}&orderName=${orderName}`, '_blank', 'width=500,height=700')
 };
 
+const generateSeed = (buyerId: number, productIds: number[]) => {
+  const sorted = [...productIds].sort((a, b) => a - b).join(',')
+  return `${buyerId}|${sorted}`
+};
+
+const seed = generateSeed(2, [3, 1, 2]);
+
+const handleCheckout = async () => {
+  try {
+    const response = await fetch('/api/v1/checkout', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        buyerId: props.buyerId,
+        productIds: props.productIds,
+        seed: seed,
+      }),
+    })
+
+    if (!response.ok) throw new Error('결제 준비 실패')
+
+    const {orderId, amount, orderName} = await response.json()
+    openCheckout(orderId, amount, orderName)
+  } catch (e: any) {
+    alert(e.message || '결제 처리 중 오류가 발생했습니다.')
+  }
+}
 </script>
 
 <template>
-  <button @click="() => openCheckout('ORD123', 10000, '테스트 상품')">
+  <v-btn @click="handleCheckout" color="#1E88E5" class="px-8 py-3 text-subtitle-1 font-weight-bold" style="border-radius: 10px;" elevation="3">
     결제하기
-  </button>
+  </v-btn>
 </template>
+

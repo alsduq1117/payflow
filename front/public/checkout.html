@@ -33,11 +33,15 @@
         });
         // 비회원 결제
         // const widgets = tossPayments.widgets({ customerKey: TossPayments.ANONYMOUS });
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+        const amount = Number(urlParams.get('amount'));
+        const orderName = urlParams.get('orderName');
 
         // ------ 주문의 결제 금액 설정 ------
         await widgets.setAmount({
             currency: "KRW",
-            value: 50000,
+            value: amount,
         });
 
         await Promise.all([
@@ -55,7 +59,7 @@
             if (coupon.checked) {
                 await widgets.setAmount({
                     currency: "KRW",
-                    value: 50000 - 5000,
+                    value: amount - 5000,
                 });
 
                 return;
@@ -63,15 +67,15 @@
 
             await widgets.setAmount({
                 currency: "KRW",
-                value: 50000,
+                value: amount,
             });
         });
 
         // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
         button.addEventListener("click", async function () {
             await widgets.requestPayment({
-                orderId: "kfTzVFcSnDbgOVoGODXiq",
-                orderName: "기모띵",
+                orderId: orderId,
+                orderName: orderName,
                 successUrl: window.location.origin + "/success.html",
                 failUrl: window.location.origin + "/fail.html",
                 customerEmail: "customer123@gmail.com",
