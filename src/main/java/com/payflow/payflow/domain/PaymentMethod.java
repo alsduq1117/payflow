@@ -11,7 +11,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public enum PaymentMethod {
 
-    EASY_PAY("간편 결제");
+    EASY_PAY("간편결제");
 
     private final String value;
 
@@ -21,7 +21,7 @@ public enum PaymentMethod {
     }
 
     @JsonCreator
-    public static PaymentMethod of(String value) {
+    public static PaymentMethod fromValue(String value) {
         return Arrays.stream(values())
                 .filter(v -> v.value.equalsIgnoreCase(value))
                 .findFirst()

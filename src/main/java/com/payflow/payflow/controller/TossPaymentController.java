@@ -1,6 +1,7 @@
 package com.payflow.payflow.controller;
 
 import com.payflow.payflow.dto.request.TossPaymentConfirmRequest;
+import com.payflow.payflow.domain.PaymentConfirmationResult;
 import com.payflow.payflow.service.PaymentConfirmService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,8 @@ public class TossPaymentController {
     private final PaymentConfirmService paymentConfirmService;
 
     @PostMapping("/confirm")
-    public ResponseEntity<String> confirm(@Valid @RequestBody TossPaymentConfirmRequest request) {
-        String result = paymentConfirmService.confirm(request);
+    public ResponseEntity<PaymentConfirmationResult> confirm(@Valid @RequestBody TossPaymentConfirmRequest request) {
+        PaymentConfirmationResult result = paymentConfirmService.confirm(request);
         return ResponseEntity.ok().body(result);
     }
 }

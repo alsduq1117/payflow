@@ -1,5 +1,6 @@
 package com.payflow.payflow.domain;
 
+import com.payflow.payflow.domain.common.BaseEntity;
 import com.payflow.payflow.dto.request.ProductEditor;
 import jakarta.persistence.*;
 import lombok.Builder;

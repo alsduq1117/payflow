@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class PaymentFailure {
-    private final String code;
-    private final String reason;
+    private final String errorCode;
+    private final String message;
 }

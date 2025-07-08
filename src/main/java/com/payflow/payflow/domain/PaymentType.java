@@ -11,7 +11,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public enum PaymentType {
 
-    NORMAL( "일반 결제");
+    NORMAL( "일반결제");
 
     private final String value;
 
@@ -21,10 +21,10 @@ public enum PaymentType {
     }
 
     @JsonCreator
-    public static PaymentType of(String value) {
+    public static PaymentType fromName(String name) {
         return Arrays.stream(values())
-                .filter(v -> v.value.equalsIgnoreCase(value))
+                .filter(v -> v.name().equalsIgnoreCase(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid PaymentType: " + value));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid PaymentType: " + name));
     }
 }

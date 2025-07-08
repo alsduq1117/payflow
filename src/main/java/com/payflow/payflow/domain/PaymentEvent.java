@@ -1,5 +1,6 @@
 package com.payflow.payflow.domain;
 
+import com.payflow.payflow.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,9 +44,12 @@ public class PaymentEvent extends BaseEntity {
     @Column(name = "is_payment_done", nullable = false)
     private Boolean isPaymentDone;
 
+    @Column(name = "psp_raw_data", columnDefinition = "TEXT")
+    private String pspRawData;
+
 
     @Builder
-    public PaymentEvent(Long buyerId, String orderName, String orderId, String paymentKey, PaymentType paymentType, PaymentMethod paymentMethod, LocalDateTime approvedAt, Boolean isPaymentDone) {
+    public PaymentEvent(Long buyerId, String orderName, String orderId, String paymentKey, PaymentType paymentType, PaymentMethod paymentMethod, LocalDateTime approvedAt, Boolean isPaymentDone, String pspRawData) {
         this.buyerId = buyerId;
         this.orderName = orderName;
         this.orderId = orderId;
@@ -54,6 +58,7 @@ public class PaymentEvent extends BaseEntity {
         this.paymentMethod = paymentMethod;
         this.approvedAt = approvedAt;
         this.isPaymentDone = isPaymentDone;
+        this.pspRawData = pspRawData;
     }
 
 }

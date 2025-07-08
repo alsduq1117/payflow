@@ -1,5 +1,6 @@
 package com.payflow.payflow.domain;
 
+import com.payflow.payflow.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,5 +52,9 @@ public class PaymentOrder extends BaseEntity {
         this.status = status != null ? status : PaymentStatus.NOT_STARTED;
         this.isLedgerUpdated = isLedgerUpdated != null ? isLedgerUpdated : false;
         this.isWalletUpdated = isWalletUpdated != null ? isWalletUpdated : false;
+    }
+
+    public void updateStatus(PaymentStatus newStatus) {
+        this.status = newStatus;
     }
 }

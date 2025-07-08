@@ -12,8 +12,5 @@ import java.util.Map;
 public interface TossFeignClient {
 
     @PostMapping(value = "/v1/payments/confirm", consumes = MediaType.APPLICATION_JSON_VALUE)
-    String confirm(
-            @RequestHeader("Authorization") String authorization,
-            @RequestBody Map<String, Object> request
-    );
+    TossPaymentConfirmationResponse confirm(@RequestHeader("Authorization") String authorization, @RequestBody Map<String, Object> request);
 }
