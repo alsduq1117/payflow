@@ -39,12 +39,7 @@ onMounted(fetchProducts)
       >
         <v-card class="product-card pa-5" :to="`/product/${product.id}`" tag="router-link" hover>
           <!-- 이미지: 서버의 thumbnailUrl 사용 -->
-          <v-img
-            :src="product.thumbnailUrl"
-            height="250"
-            cover
-            class="mb-2"
-          ></v-img>
+          <v-img :src="product.thumbnailUrl" height="250" cover class="mb-2"></v-img>
 
           <!-- 상품명 -->
           <div class="text-body-1 font-weight-medium mb-4">

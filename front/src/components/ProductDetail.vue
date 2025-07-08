@@ -31,7 +31,7 @@ onMounted(async () => {
   <v-container class="py-10" v-if="product">
     <v-row>
       <v-col cols="12" md="6">
-        <v-img :src="product.thumbnailUrl" height="400" class="rounded-lg" cover />
+        <v-img :src="product.thumbnailUrl" height="400" class="rounded-lg" />
       </v-col>
 
       <v-col cols="12" md="6" class="ps-md-15">
