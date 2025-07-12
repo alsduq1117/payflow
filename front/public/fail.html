@@ -19,4 +19,6 @@
 
     codeElement.textContent = "에러코드: " + urlParams.get("code");
     messageElement.textContent = "실패 사유: " + urlParams.get("message");
+
+    setTimeout(() => {window.close();}, 500);
 </script>

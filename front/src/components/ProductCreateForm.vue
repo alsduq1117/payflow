@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import {ref} from 'vue'
+import { useRouter } from 'vue-router'
 import type {VForm} from 'vuetify/components'
 import axios from "axios";
 
 // 유효성 검사 플래그 및 참조
 const valid = ref(false)
 const formRef = ref<VForm | null>(null)
-
+const router = useRouter()
 
 // 상품 폼 데이터 상태
 const form = ref({
@@ -81,6 +82,7 @@ const submitForm = async () => {
   try {
     await axios.post('/api/v1/products', form.value)
     alert('상품 등록 완료!')
+    await router.push('/')
     // 폼 초기화, 라우터 이동 등 필요 시 추가
   } catch (e) {
     alert('등록 중 오류 발생')

@@ -27,12 +27,15 @@ public class Product extends BaseEntity {
 
     private Integer price;
 
+    @Column(name = "file_url")
     private String fileUrl;
 
+    @Column(name = "thumbnail_url")
     private String thumbnailUrl;
 
     private String description;
 
+    @Column(name = "seller_id")
     private Long sellerId;
 
     @Column(name = "deleted_at")
