@@ -1,6 +1,6 @@
 package com.payflow.payflow.exception;
 
-import com.payflow.payflow.dto.response.ErrorResponse;
+import com.payflow.payflow.dto.common.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,5 @@
 package com.payflow.payflow.client;
 
-import com.payflow.payflow.domain.PaymentStatus;
 import lombok.Getter;
 
 @Getter
