@@ -1,5 +1,6 @@
 package com.payflow.payflow.client;
 
+import com.payflow.payflow.domain.payment.PaymentStatus;
 import lombok.Getter;
 
 @Getter
@@ -27,6 +28,18 @@ public class PSPConfirmationException extends RuntimeException {
 
         if (!(isSuccess || isFailure || isUnknown)) {
             throw new IllegalArgumentException(getClass().getSimpleName() + " 는 올바르지 않은 결제 상태를 가지고 있습니다.");
+        }
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        if (isSuccess) {
+            return PaymentStatus.SUCCESS;
+        } else if (isFailure) {
+            return PaymentStatus.FAILURE;
+        } else if (isUnknown) {
+            return PaymentStatus.UNKNOWN;
+        } else {
+            throw new IllegalStateException(getClass().getSimpleName() + " 는 올바르지 않은 결제 상태를 가지고 있습니다.");
         }
     }
 }
