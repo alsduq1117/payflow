@@ -68,7 +68,7 @@ public class CheckoutService {
                         .orderId(command.getIdempotencyKey())  // 공통 키로 연결
                         .productId(product.getId())
                         .amount(product.getPrice().longValue())
-                        .paymentStatus(PaymentStatus.NOT_STARTED)
+                        .status(PaymentStatus.NOT_STARTED)
                         .build())
                 .collect(Collectors.toList());
 

@@ -1,7 +1,7 @@
 package com.payflow.payflow.repository.product;
 
 import com.payflow.payflow.domain.product.Product;
-import com.payflow.payflow.domain.QProduct;
+import com.payflow.payflow.domain.product.QProduct;
 import com.payflow.payflow.dto.product.ProductPageRequest;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

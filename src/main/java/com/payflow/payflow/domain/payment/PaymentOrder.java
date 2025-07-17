@@ -2,6 +2,7 @@ package com.payflow.payflow.domain.payment;
 
 import com.payflow.payflow.domain.common.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @Table(name = "payment_orders")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PaymentOrder extends BaseEntity {
 
     @Id
@@ -35,6 +36,12 @@ public class PaymentOrder extends BaseEntity {
     @Column(name = "payment_order_status", nullable = false)
     private PaymentStatus status;
 
+    @Column(name = "failed_count", nullable = false)
+    private Byte failedCount = 0;
+
+    @Column(name = "threshold", nullable = false)
+    private Byte threshold = 5;
+
     @Column(name = "ledger_updated", nullable = false)
     private Boolean isLedgerUpdated;
 
@@ -43,15 +50,17 @@ public class PaymentOrder extends BaseEntity {
 
 
     @Builder
-    public PaymentOrder(Long paymentEventId, Long sellerId, Long productId, String orderId, Long amount, PaymentStatus paymentStatus, Boolean isLedgerUpdated, Boolean isWalletUpdated) {
+    public PaymentOrder(Long paymentEventId, Long sellerId, Long productId, String orderId, Long amount, PaymentStatus status, Boolean isLedgerUpdated, Boolean isWalletUpdated, Byte failedCount, Byte threshold) {
         this.paymentEventId = paymentEventId;
         this.sellerId = sellerId;
         this.productId = productId;
         this.orderId = orderId;
         this.amount = amount;
-        this.status = status != null ? status : PaymentStatus.NOT_STARTED;
+        this.status = this.status != null ? this.status : PaymentStatus.NOT_STARTED;
         this.isLedgerUpdated = isLedgerUpdated != null ? isLedgerUpdated : false;
         this.isWalletUpdated = isWalletUpdated != null ? isWalletUpdated : false;
+        this.failedCount = failedCount;
+        this.threshold = threshold;
     }
 
     public void updateStatus(PaymentStatus newStatus) {

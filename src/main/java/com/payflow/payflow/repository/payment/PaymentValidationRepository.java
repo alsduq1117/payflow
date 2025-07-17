@@ -1,6 +1,6 @@
 package com.payflow.payflow.repository.payment;
 
-import com.payflow.payflow.domain.QPaymentOrder;
+import com.payflow.payflow.domain.payment.QPaymentOrder;
 import com.payflow.payflow.exception.payment.PaymentValidationException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

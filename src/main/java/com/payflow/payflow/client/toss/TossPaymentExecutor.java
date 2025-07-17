@@ -3,11 +3,7 @@ package com.payflow.payflow.client.toss;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.payflow.payflow.client.PSPConfirmationStatus;
-import com.payflow.payflow.domain.payment.PaymentExtraDetails;
-import com.payflow.payflow.domain.payment.PaymentMethod;
-import com.payflow.payflow.domain.payment.PaymentType;
-import com.payflow.payflow.dto.payment.TossPaymentConfirmRequest;
-import com.payflow.payflow.domain.payment.PaymentExecutionResult;
+import com.payflow.payflow.domain.payment.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.support.RetryTemplate;
@@ -30,7 +26,7 @@ public class TossPaymentExecutor {
     @Value("${PSP.toss.secretKey}")
     private String secretKey;
 
-    public PaymentExecutionResult execute(TossPaymentConfirmRequest command) {
+    public PaymentExecutionResult execute(PaymentConfirmCommand command) {
         String encodedKey = Base64.getEncoder().encodeToString((secretKey + ":").getBytes());
         String authorizationHeader = "Basic " + encodedKey;
         String jsonString;

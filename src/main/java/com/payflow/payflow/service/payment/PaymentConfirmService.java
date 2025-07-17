@@ -1,10 +1,10 @@
 package com.payflow.payflow.service.payment;
 
 import com.payflow.payflow.client.toss.TossPaymentExecutor;
-import com.payflow.payflow.domain.payment.PaymentStatusUpdateCommand;
-import com.payflow.payflow.dto.payment.TossPaymentConfirmRequest;
+import com.payflow.payflow.domain.payment.PaymentConfirmCommand;
 import com.payflow.payflow.domain.payment.PaymentConfirmationResult;
 import com.payflow.payflow.domain.payment.PaymentExecutionResult;
+import com.payflow.payflow.domain.payment.PaymentStatusUpdateCommand;
 import com.payflow.payflow.repository.payment.PaymentStatusUpdateRepository;
 import com.payflow.payflow.repository.payment.PaymentValidationRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class PaymentConfirmService {
     private final PaymentErrorHandler paymentErrorHandler;
 
     @Transactional
-    public PaymentConfirmationResult confirm(TossPaymentConfirmRequest request) {
+    public PaymentConfirmationResult confirm(PaymentConfirmCommand request) {
         String orderId = request.getOrderId();
         String paymentKey = request.getPaymentKey();
 

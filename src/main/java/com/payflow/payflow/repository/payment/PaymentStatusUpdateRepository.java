@@ -1,9 +1,6 @@
 package com.payflow.payflow.repository.payment;
 
-import com.payflow.payflow.domain.*;
-import com.payflow.payflow.domain.payment.PaymentOrder;
-import com.payflow.payflow.domain.payment.PaymentStatus;
-import com.payflow.payflow.domain.payment.PaymentStatusUpdateCommand;
+import com.payflow.payflow.domain.payment.*;
 import com.payflow.payflow.exception.payment.PaymentAlreadyProcessedException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

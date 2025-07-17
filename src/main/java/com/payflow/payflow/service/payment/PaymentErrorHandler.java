@@ -1,10 +1,7 @@
 package com.payflow.payflow.service.payment;
 
 import com.payflow.payflow.client.PSPConfirmationException;
-import com.payflow.payflow.domain.payment.PaymentConfirmationResult;
-import com.payflow.payflow.domain.payment.PaymentStatus;
-import com.payflow.payflow.domain.payment.PaymentFailure;
-import com.payflow.payflow.domain.payment.PaymentStatusUpdateCommand;
+import com.payflow.payflow.domain.payment.*;
 import com.payflow.payflow.dto.payment.TossPaymentConfirmRequest;
 import com.payflow.payflow.exception.payment.PaymentAlreadyProcessedException;
 import com.payflow.payflow.exception.payment.PaymentValidationException;
@@ -20,7 +17,7 @@ public class PaymentErrorHandler {
 
     private final PaymentStatusUpdateRepository paymentStatusUpdateRepository;
 
-    public PaymentConfirmationResult handlePaymentConfirmationError(Exception e, TossPaymentConfirmRequest request) {
+    public PaymentConfirmationResult handlePaymentConfirmationError(Exception e, PaymentConfirmCommand request) {
         log.error("결제 확인 중 예외 발생: {}", e.getMessage(), e);
 
         PaymentStatus status;
