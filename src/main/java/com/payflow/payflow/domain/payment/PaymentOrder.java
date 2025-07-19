@@ -33,13 +33,13 @@ public class PaymentOrder extends BaseEntity {
     private Long amount;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "payment_order_status", nullable = false)
+    @Column(name = "payment_order_status")
     private PaymentStatus status;
 
-    @Column(name = "failed_count", nullable = false)
+    @Column(name = "failed_count")
     private Byte failedCount = 0;
 
-    @Column(name = "threshold", nullable = false)
+    @Column(name = "threshold")
     private Byte threshold = 5;
 
     @Column(name = "ledger_updated", nullable = false)
@@ -56,11 +56,11 @@ public class PaymentOrder extends BaseEntity {
         this.productId = productId;
         this.orderId = orderId;
         this.amount = amount;
-        this.status = this.status != null ? this.status : PaymentStatus.NOT_STARTED;
+        this.status = status != null ? status : PaymentStatus.NOT_STARTED;
         this.isLedgerUpdated = isLedgerUpdated != null ? isLedgerUpdated : false;
         this.isWalletUpdated = isWalletUpdated != null ? isWalletUpdated : false;
-        this.failedCount = failedCount;
-        this.threshold = threshold;
+        this.failedCount = failedCount != null ? failedCount : 0;
+        this.threshold = threshold != null ? threshold : 5;
     }
 
     public void updateStatus(PaymentStatus newStatus) {

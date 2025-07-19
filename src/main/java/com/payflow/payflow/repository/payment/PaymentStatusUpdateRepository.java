@@ -4,6 +4,7 @@ import com.payflow.payflow.domain.payment.*;
 import com.payflow.payflow.exception.payment.PaymentAlreadyProcessedException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,7 @@ public class PaymentStatusUpdateRepository {
 
     private final JPAQueryFactory queryFactory;
     private final JdbcTemplate jdbcTemplate;
+    private final ApplicationEventPublisher eventPublisher;
 
     public void updatePaymentStatusToExecuting(String orderId, String paymentKey) {
         List<PaymentOrder> paymentOrders = checkPreviousPaymentOrderStatus(orderId);
@@ -41,6 +43,7 @@ public class PaymentStatusUpdateRepository {
         insertPaymentHistory(paymentOrders, command.getStatus(), "PAYMENT_CONFIRMATION_DONE");
         updatePaymentOrderStatus(paymentOrders, command.getStatus());
         updatePaymentEventExtraDetails(command);
+        eventPublisher.publishEvent(new PaymentConfirmationSuccessEvent(command.getOrderId()));
         return true;
     }
 
