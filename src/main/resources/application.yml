@@ -9,7 +9,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
@@ -100,9 +100,9 @@ feign:
         readTimeout: 5000
 
 
-resilience4j.thread-pool-bulkhead:
-  instances:
-    paymentRecovery:
-      maxThreadPoolSize: 2
-      coreThreadPoolSize: 1
-      queueCapacity: 5
+#resilience4j.thread-pool-bulkhead:
+#  instances:
+#    paymentRecovery:
+#      maxThreadPoolSize: 2
+#      coreThreadPoolSize: 1
+#      queueCapacity: 5

@@ -1,7 +1,10 @@
 package com.payflow.payflow.service.payment;
 
 import com.payflow.payflow.client.toss.TossPaymentExecutor;
-import com.payflow.payflow.domain.payment.*;
+import com.payflow.payflow.domain.payment.PaymentConfirmCommand;
+import com.payflow.payflow.domain.payment.PaymentExecutionResult;
+import com.payflow.payflow.domain.payment.PaymentStatusUpdateCommand;
+import com.payflow.payflow.domain.payment.PendingPaymentEvent;
 import com.payflow.payflow.repository.payment.PaymentRepository;
 import com.payflow.payflow.repository.payment.PaymentStatusUpdateRepository;
 import com.payflow.payflow.repository.payment.PaymentValidationRepository;
@@ -12,7 +15,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 @Service
 @RequiredArgsConstructor
