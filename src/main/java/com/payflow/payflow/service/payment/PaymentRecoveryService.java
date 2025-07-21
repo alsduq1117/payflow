@@ -5,6 +5,8 @@ import com.payflow.payflow.domain.payment.*;
 import com.payflow.payflow.repository.payment.PaymentRepository;
 import com.payflow.payflow.repository.payment.PaymentStatusUpdateRepository;
 import com.payflow.payflow.repository.payment.PaymentValidationRepository;
+import io.github.resilience4j.bulkhead.ThreadPoolBulkhead;
+import io.github.resilience4j.bulkhead.ThreadPoolBulkheadRegistry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -21,11 +23,12 @@ public class PaymentRecoveryService {
     private final PaymentValidationRepository paymentValidationRepository;
     private final TossPaymentExecutor tossPaymentExecutor;
     private final PaymentErrorHandler paymentErrorHandler;
-    private final Executor recoveryExecutor;
+    private final ThreadPoolBulkheadRegistry bulkheadRegistry;
 
-    @Scheduled(fixedDelay = 180000, initialDelay = 180000)
+    @Scheduled(fixedDelay = 3 * 60 * 1000, initialDelay = 3 * 60 * 1000)
     public void recovery() {
         List<PendingPaymentEvent> pendingPayments = paymentRepository.findPendingPayments();
+        ThreadPoolBulkhead bulkhead = bulkheadRegistry.bulkhead("paymentRecovery");
 
         for (PendingPaymentEvent paymentEvent : pendingPayments) {
             PaymentConfirmCommand command = PaymentConfirmCommand.builder()
@@ -34,7 +37,7 @@ public class PaymentRecoveryService {
                     .amount(paymentEvent.totalAmount())
                     .build();
 
-            recoveryExecutor.execute(() -> {
+            bulkhead.executeRunnable(() -> {
                 try {
                     paymentValidationRepository.isValid(command.getOrderId(), command.getAmount());
 

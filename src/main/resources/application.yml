@@ -97,4 +97,12 @@ feign:
     config:
       tossFeignClient:
         connectTimeout: 3000  # 요청이 3초 안에 연결되지 않으면 에러
-        readTimeout: 5000     # 요청이 연결된 뒤 5초 안에 응답이 오지 않으면 에러
+        readTimeout: 5000
+
+
+resilience4j.thread-pool-bulkhead:
+  instances:
+    paymentRecovery:
+      maxThreadPoolSize: 2
+      coreThreadPoolSize: 1
+      queueCapacity: 5

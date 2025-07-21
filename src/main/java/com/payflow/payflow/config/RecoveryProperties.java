@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "recovery")
 public class RecoveryProperties {
-
-    private int threads = 1;
+    private int threads = 2;
 
 }

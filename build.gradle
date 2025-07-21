@@ -83,6 +83,10 @@ dependencies {
 
     //retry
     implementation 'org.springframework.retry:spring-retry'
+
+    //resilience4j
+    implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.2.0'
+    implementation 'io.github.resilience4j:resilience4j-thread-pool-bulkhead:2.2.0'
 }
 
 tasks.named('test') {
