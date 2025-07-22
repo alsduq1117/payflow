@@ -1,4 +1,4 @@
-package com.payflow.payflow.service.wallet;
+package com.payflow.payflow.repository.wallet;
 
 
 import com.payflow.payflow.domain.wallet.WalletTransaction;

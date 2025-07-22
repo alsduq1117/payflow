@@ -19,7 +19,7 @@ public class PaymentEventListener {
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, classes = PaymentConfirmationSuccessEvent.class)
     public void handleSettlement(PaymentConfirmationSuccessEvent walletEvent) {
-        walletService.processSettlement(walletEvent);
+        walletService.handleSettlement(walletEvent);
     }
 
     @Async

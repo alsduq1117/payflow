@@ -1,55 +1,36 @@
 package com.payflow.payflow.service.wallet;
 
 import com.payflow.payflow.domain.payment.PaymentConfirmationSuccessEvent;
-import com.payflow.payflow.domain.payment.PaymentOrder;
-import com.payflow.payflow.domain.wallet.Wallet;
-import com.payflow.payflow.domain.wallet.WalletTransaction;
-import com.payflow.payflow.repository.payment.PaymentOrderRepository;
-import com.payflow.payflow.repository.wallet.WalletRepository;
-import jakarta.transaction.Transactional;
+import com.payflow.payflow.repository.wallet.WalletTransactionRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.retry.RetryException;
+import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class WalletService {
 
-    private final PaymentOrderRepository paymentOrderRepository;
-    private final WalletRepository walletRepository;
+    @Qualifier("lockingRetryTemplate")
+    private final RetryTemplate lockingRetryTemplate;
     private final WalletTransactionRepository walletTransactionRepository;
+    private final SettlementProcessor settlementProcessor;
 
-    @Transactional
-    public void processSettlement(PaymentConfirmationSuccessEvent walletEvent) {
-
-        if(walletTransactionRepository.existsByOrderId((walletEvent.getOrderId()))){
+    public void handleSettlement(PaymentConfirmationSuccessEvent event) {
+        if (walletTransactionRepository.existsByOrderId(event.getOrderId())) {
             return;
         }
 
-        List<PaymentOrder> paymentOrders = paymentOrderRepository.getPaymentOrdersByOrderId(walletEvent.getOrderId());
-        Map<Long, List<PaymentOrder>> paymentOrdersBySellerId = paymentOrders.stream().collect(Collectors.groupingBy(PaymentOrder::getSellerId));
-
-        List<WalletTransaction> walletTransactions = new ArrayList<>();
-        List<Wallet> updatedWallets = getUpdatedWallets(paymentOrdersBySellerId, walletTransactions);
-        walletRepository.saveAll(updatedWallets);
-        walletTransactionRepository.saveAll(walletTransactions);
-    }
-
-    private List<Wallet> getUpdatedWallets(Map<Long, List<PaymentOrder>> paymentOrdersBySellerId, List<WalletTransaction> walletTransactions) {
-        Set<Long> sellerIds = paymentOrdersBySellerId.keySet();
-        List<Wallet> wallets = walletRepository.findByUserIdIn(sellerIds);
-
-        wallets.forEach(wallet -> {
-            List<PaymentOrder> paymentOrders = paymentOrdersBySellerId.get(wallet.getUserId());
-            List<WalletTransaction> generatedTransactions = wallet.calculateBalanceWith(paymentOrders);
-            walletTransactions.addAll(generatedTransactions);
-        });
-
-        return wallets;
+        try {
+            lockingRetryTemplate.execute(context -> {
+                settlementProcessor.processSettlementWithRecent(event);
+                return null;
+            });
+        } catch (RetryException e) {
+            log.error("락 재시도 실패: orderId={}", event.getOrderId(), e);
+        }
     }
 }
