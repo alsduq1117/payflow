@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.payflow.payflow.client.PSPConfirmationStatus;
 import com.payflow.payflow.domain.payment.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
@@ -19,9 +20,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TossPaymentExecutor {
 
+    @Qualifier("pspRetryTemplate")
+    private final RetryTemplate pspRetryTemplate;
     private final ObjectMapper objectMapper;
     private final TossFeignClient tossFeignClient;
-    private final RetryTemplate retryTemplate;
+    
 
     @Value("${PSP.toss.secretKey}")
     private String secretKey;
@@ -36,7 +39,7 @@ public class TossPaymentExecutor {
         request.put("orderId", command.getOrderId());
         request.put("amount", command.getAmount());
 
-        TossPaymentConfirmationResponse response = retryTemplate.execute(context ->
+        TossPaymentConfirmationResponse response = pspRetryTemplate.execute(context ->
                 tossFeignClient.confirm(authorizationHeader, request)
         );
 
