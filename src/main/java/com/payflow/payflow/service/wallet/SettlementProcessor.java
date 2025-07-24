@@ -25,20 +25,16 @@ public class SettlementProcessor {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void processSettlementWithRecent(PaymentConfirmationSuccessEvent event) {
-        // 1. 결제 주문 조회 (재시도마다 최신 데이터)
         List<PaymentOrder> paymentOrders = paymentOrderRepository
-                .getPaymentOrdersByOrderId(event.getOrderId());
+                .findByOrderId(event.getOrderId());
 
         Map<Long, List<PaymentOrder>> ordersBySeller = paymentOrders.stream()
                 .collect(Collectors.groupingBy(PaymentOrder::getSellerId));
 
-        // 2. 판매자 ID 추출
         Set<Long> sellerIds = ordersBySeller.keySet();
 
-        // 3. 최신 지갑 데이터 조회 (재시도마다 새로 조회)
         List<Wallet> wallets = walletRepository.findByUserIdIn(sellerIds);
 
-        // 4. 지갑 업데이트 및 트랜잭션 생성
         List<WalletTransaction> transactions = new ArrayList<>();
         wallets.forEach(wallet -> {
             List<PaymentOrder> sellerOrders = ordersBySeller.getOrDefault(wallet.getUserId(), Collections.emptyList());

@@ -1,6 +1,7 @@
 package com.payflow.payflow.exception.payment;
 
 import com.payflow.payflow.exception.CustomException;
+import org.springframework.http.HttpStatus;
 
 public class PaymentValidationException extends CustomException {
 
@@ -10,6 +11,6 @@ public class PaymentValidationException extends CustomException {
 
     @Override
     public int getStatusCode() {
-        return 0;
+        return HttpStatus.BAD_REQUEST.value();
     }
 }
