@@ -2,10 +2,7 @@ package com.payflow.payflow.domain.payment;
 
 import com.payflow.payflow.domain.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
@@ -65,5 +62,13 @@ public class PaymentOrder extends BaseEntity {
 
     public void updateStatus(PaymentStatus newStatus) {
         this.status = newStatus;
+    }
+
+    public void confirmWalletUpdate() {
+        this.isWalletUpdated = true;
+    }
+
+    public void confirmLedgerUpdate() {
+        this.isLedgerUpdated = true;
     }
 }

@@ -61,4 +61,8 @@ public class PaymentEvent extends BaseEntity {
         this.pspRawData = pspRawData;
     }
 
+
+    public void markPaymentDone() {
+        isPaymentDone = true;
+    }
 }
