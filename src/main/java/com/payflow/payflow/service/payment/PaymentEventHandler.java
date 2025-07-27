@@ -5,8 +5,6 @@ import com.payflow.payflow.domain.payment.PaymentConfirmationSuccessEvent;
 import com.payflow.payflow.domain.wallet.SettlementCompltedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
-import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
