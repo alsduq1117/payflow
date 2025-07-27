@@ -52,10 +52,16 @@ function loginWithProvider(provider: 'google' | 'kakao' | 'naver') {
     <v-btn type="submit" block color="#1E88E5" class="mt-4 py-3 rounded-lg" size="large">
       로그인
     </v-btn>
-  </v-form>
 
+    <div class="d-flex align-center my-6">
+      <div class="flex-grow-1" style="height: 1px; background-color: #E0E0E0;"></div>
+      <span class="px-4 text-caption text-grey">간편 로그인</span>
+      <div class="flex-grow-1" style="height: 1px; background-color: #E0E0E0;"></div>
+    </div>
+
+  </v-form>
   <!-- 소셜 로그인 아이콘 -->
-  <div class="d-flex justify-center mt-10">
+  <div class="d-flex justify-center">
     <img
       src="/social/google.png"
       alt="Google"
@@ -77,8 +83,8 @@ function loginWithProvider(provider: 'google' | 'kakao' | 'naver') {
   </div>
 
   <div class="mt-8 text-body-2">
-    <router-link to="/signup" class="me-4">회원가입</router-link>|
-    <router-link to="/forgot" class="ms-4">비밀번호 찾기</router-link>
+    <router-link to="/signup" class="me-4 text-black text-decoration-none">회원가입</router-link>|
+    <router-link to="/forgot" class="ms-4 text-black text-decoration-none">비밀번호 찾기</router-link>
   </div>
   </v-container>
 </template>
