@@ -20,7 +20,7 @@ function submit() {
 function loginWithProvider(provider: 'google' | 'kakao' | 'naver') {
   console.log(`${provider} 로그인 시도`)
   // TODO: 각 provider에 맞는 OAuth2 로그인 창 열기
-  window.location.href = `/api/oauth2/authorize/${provider}` // 예시 URI
+  window.location.href = `http://localhost:8080/oauth2/authorization/${provider}` // 예시 URI
 }
 </script>
 
