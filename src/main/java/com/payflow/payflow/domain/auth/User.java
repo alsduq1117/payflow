@@ -16,7 +16,8 @@ import java.util.Set;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"email", "provider"})})
 public class User extends BaseOnlyCreated {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -25,7 +26,7 @@ public class User extends BaseOnlyCreated {
     @Column(nullable = true)
     private String password;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String nickname;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -39,10 +40,11 @@ public class User extends BaseOnlyCreated {
     private AuthProvider provider;
 
     // OAuth2 사용자 생성 메서드
-    public static User createOAuth2User(String email,AuthProvider provider) {
+    public static User createOAuth2User(String email, String name, AuthProvider provider) {
         User user = new User();
         user.email = email;
         user.provider = provider;
+        user.nickname = name;
         user.roles.add(Role.USER);
         return user;
     }
@@ -52,6 +54,7 @@ public class User extends BaseOnlyCreated {
         User user = new User();
         user.email = email;
         user.password = password;
+        user.nickname = email.split("@")[0];
         user.provider = AuthProvider.LOCAL;
         user.roles.add(Role.USER);
         return user;

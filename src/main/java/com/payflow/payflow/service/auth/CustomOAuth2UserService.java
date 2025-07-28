@@ -26,8 +26,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         );
 
         String email = extractEmail(oAuth2User.getAttributes(), provider);
+        String name = extractName(oAuth2User.getAttributes(), provider);
+
         User user = userRepository.findByEmail(email)
-                .orElseGet(() -> registerOAuth2User(provider, email));
+                .orElseGet(() -> registerOAuth2User(provider, name, email));
 
         return new UserPrincipal(user, oAuth2User.getAttributes());
     }
@@ -41,9 +43,18 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         };
     }
 
-    private User registerOAuth2User(AuthProvider provider, String email) {
+    private String extractName(Map<String, Object> attributes, AuthProvider provider) {
+        return switch (provider) {
+            case GOOGLE -> (String) attributes.get("name");
+            case KAKAO -> ((Map<String, Object>) attributes.get("properties")).get("nickname").toString();
+            case NAVER -> ((Map<String, Object>) attributes.get("response")).get("name").toString();
+            default -> throw new IllegalArgumentException("Invalid provider");
+        };
+    }
+
+    private User registerOAuth2User(AuthProvider provider, String name, String email) {
         return userRepository.save(
-                User.createOAuth2User(email, provider)
+                User.createOAuth2User(email, name, provider)
         );
     }
 }

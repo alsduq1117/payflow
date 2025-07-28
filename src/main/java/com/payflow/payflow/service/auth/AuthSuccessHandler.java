@@ -1,25 +1,27 @@
 package com.payflow.payflow.service.auth;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.net.URLEncoder;
+import java.time.Duration;
 
 @Component
 @RequiredArgsConstructor
 public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
     private final JwtUtil jwtUtil;
-    private final ObjectMapper objectMapper;
+    @Value("${app.oauth2.redirect-uri}")
+    private String redirectUri;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -31,16 +33,22 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         String accessToken = jwtUtil.generateAccessToken(principal);
         String refreshToken = jwtUtil.generateRefreshToken(principal);
 
-        // 공통 응답 포맷
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("status", HttpStatus.OK.value());
-        body.put("email", principal.getUsername());
-        body.put("accessToken", accessToken);
-        body.put("provider", principal.getProvider().name());
-        body.put("refreshToken", refreshToken);
+        ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")  // Cross-Origin 환경이면 필요
+                .path("/")
+                .maxAge(Duration.ofDays(30))
+                .build();
 
-        response.addHeader("Authorization", "Bearer " + accessToken);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        objectMapper.writeValue(response.getWriter(), body);
+        // 3. 액세스 토큰 → URL Fragment로 전달
+        String redirectUrl = UriComponentsBuilder.fromUriString(redirectUri)
+                .fragment("access_token=" + URLEncoder.encode(accessToken, "UTF-8")
+                        + "&provider=" + principal.getProvider().name())
+                .build().toUriString();
+
+        // 4. 응답 설정
+        response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
+        response.sendRedirect(redirectUrl);
     }
 }

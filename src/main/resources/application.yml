@@ -99,7 +99,9 @@ feign:
         connectTimeout: 3000  # 요청이 3초 안에 연결되지 않으면 에러
         readTimeout: 5000
 
-
+app:
+  oauth2:
+    redirect-uri: http://localhost:3000/oauth2/redirect
 #resilience4j.thread-pool-bulkhead:
 #  instances:
 #    paymentRecovery:

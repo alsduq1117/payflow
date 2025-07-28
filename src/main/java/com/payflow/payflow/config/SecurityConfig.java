@@ -63,9 +63,20 @@ public class SecurityConfig {
                 // 요청 권한 설정
                 .authorizeHttpRequests(auth -> auth
                         // 인증 없이 접근 허용할 경로
-                        .requestMatchers("/", "/auth/**", "/oauth2/**", "/error", "/v3/api-docs/**" , "/api/test/**", "/api/v1/products").permitAll()
+                        .requestMatchers(
+                                "/",
+                                "/auth/**",
+                                "/oauth2/**",
+                                "/error",
+                                "/v3/api-docs/**",
+                                "/api/v1/products",
+                                "/api/v1/products/**",
+                                "/api/v1/s3/presigned-url"
+                        ).permitAll()
                         // ADMIN 역할만 접근 가능한 경로
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers(
+                                "/api/admin/**"
+                        ).hasRole("ADMIN")
                         // 그 외 모든 요청은 인증 필요
                         .anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2
@@ -119,9 +130,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigSource() {
         CorsConfiguration config = new CorsConfiguration();
         // 허용할 오리진 목록
-        config.setAllowedOrigins(Arrays.asList("https://production.com",  // 운영 도메인
-                "http://localhost:3000"   // 개발용 로컬호스트
-        ));
+        config.setAllowedOrigins(Arrays.asList("https://production.com", "http://localhost:3000"));
         // 허용할 HTTP 메소드
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         // 허용할 헤더
