@@ -15,7 +15,6 @@ public class SignupRequest {
     private String email;
 
     @NotBlank
-    @Size(min = 8)
     private String password;
 
     public SignupRequest(String email, String password) {

@@ -17,7 +17,7 @@ import java.time.Duration;
 
 @Component
 @RequiredArgsConstructor
-public class AuthSuccessHandler implements AuthenticationSuccessHandler {
+public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private final JwtUtil jwtUtil;
     @Value("${app.oauth2.redirect-uri}")
@@ -35,7 +35,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
         ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .secure(true)
+                .secure(false)     // HTTPS 달고 나서 true 로 변경 필요
                 .sameSite("None")  // Cross-Origin 환경이면 필요
                 .path("/")
                 .maxAge(Duration.ofDays(30))

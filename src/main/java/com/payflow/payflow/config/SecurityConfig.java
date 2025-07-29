@@ -42,7 +42,8 @@ public class SecurityConfig {
     // 사용자 상세 서비스 (DB에서 사용자 정보 조회)
     private final CustomUserDetailsService userDetailsService;
     private final ObjectMapper objectMapper;
-    private final AuthSuccessHandler authSuccessHandler;
+    private final Oauth2SuccessHandler oauth2SuccessHandler;
+    private final RestLoginSuccessHandler restLoginSuccessHandler;
     private final AuthFailureHandler authFailureHandler;
 
     private final CustomOAuth2UserService oAuth2UserService;
@@ -71,7 +72,8 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/api/v1/products",
                                 "/api/v1/products/**",
-                                "/api/v1/s3/presigned-url"
+                                "/api/v1/s3/presigned-url",
+                                "/api/v1/auth/signup"
                         ).permitAll()
                         // ADMIN 역할만 접근 가능한 경로
                         .requestMatchers(
@@ -83,7 +85,7 @@ public class SecurityConfig {
                         .userInfoEndpoint(endpoint -> endpoint
                                 .userService(oAuth2UserService)
                         )
-                        .successHandler(authSuccessHandler)
+                        .successHandler(oauth2SuccessHandler)
                         .failureHandler(authFailureHandler)
                 )
 
@@ -105,8 +107,8 @@ public class SecurityConfig {
     // 일반 로그인 필터 빈 등록
     @Bean
     public EmailPasswordAuthFilter emailPasswordAuthFilter(AuthenticationManager authenticationManager, ObjectMapper objectMapper) throws Exception {
-        EmailPasswordAuthFilter filter = new EmailPasswordAuthFilter(new AntPathRequestMatcher("/auth/login", "POST"), authenticationManager, objectMapper);
-        filter.setAuthenticationSuccessHandler(authSuccessHandler);
+        EmailPasswordAuthFilter filter = new EmailPasswordAuthFilter(new AntPathRequestMatcher("/api/v1/auth/login", "POST"), authenticationManager, objectMapper);
+        filter.setAuthenticationSuccessHandler(restLoginSuccessHandler);
         filter.setAuthenticationFailureHandler(authFailureHandler);
         return filter;
     }
