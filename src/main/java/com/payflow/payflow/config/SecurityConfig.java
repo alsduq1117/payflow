@@ -37,15 +37,12 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     // JWT 인증 실패 핸들러
     private final JwtAuthenticationEntryPoint jwtEntryPoint;
-    // JWT 유틸리티 (토큰 생성/검증)
-    private final JwtUtil jwtUtil;
     // 사용자 상세 서비스 (DB에서 사용자 정보 조회)
     private final CustomUserDetailsService userDetailsService;
     private final ObjectMapper objectMapper;
     private final Oauth2SuccessHandler oauth2SuccessHandler;
     private final RestLoginSuccessHandler restLoginSuccessHandler;
     private final AuthFailureHandler authFailureHandler;
-
     private final CustomOAuth2UserService oAuth2UserService;
 
     @Bean

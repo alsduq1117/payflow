@@ -1,7 +1,7 @@
 package com.payflow.payflow.service.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.payflow.payflow.dto.auth.LoginResponse;
+import com.payflow.payflow.dto.auth.TokenResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -40,9 +40,9 @@ public class RestLoginSuccessHandler implements AuthenticationSuccessHandler {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        LoginResponse loginResponse = new LoginResponse(accessToken);
+        TokenResponse tokenResponse = new TokenResponse(accessToken);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        objectMapper.writeValue(response.getWriter(), loginResponse);
+        objectMapper.writeValue(response.getWriter(), tokenResponse);
     }
 }

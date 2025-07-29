@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class LoginResponse {
+public class TokenResponse {
 
     private String accessToken;
 
-    public LoginResponse(String accessToken) {
+    public TokenResponse(String accessToken) {
         this.accessToken = accessToken;
     }
 }
