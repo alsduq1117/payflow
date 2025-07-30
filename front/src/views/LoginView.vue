@@ -1,25 +1,50 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import axios from "axios";
 
 const router = useRouter()
-
+const auth = useAuthStore()
 const email = ref('')
 const password = ref('')
 const emailError = ref('')
+const passwordError = ref('')
 
-function submit() {
+async function submit() {
   emailError.value = email.value ? '' : '이메일을 입력해주세요.'
-  if (!email.value) return
+  passwordError.value = password.value ? '' : '비밀번호를 입력해주세요.'
+  if (!email.value || !password.value) return
 
-  // TODO: 로그인 처리
-  console.log('로그인 요청', { email: email.value, password: password.value })
-  router.push('/')
+  try {
+    console.log('로그인 요청', { email: email.value, password: password.value })
+
+    const res = await axios.post('/api/v1/auth/login', {
+      email: email.value,
+      password: password.value
+    }, {
+      withCredentials: true
+    })
+
+    const accessToken = res.data.accessToken
+
+    if (!accessToken) {
+      throw new Error('엑세스 토큰이 없습니다.')
+    }
+
+    auth.setToken(accessToken)
+    await auth.fetchUser()
+
+    router.push('/')
+
+  } catch (err) {
+    console.error('로그인 실패', err)
+    alert('이메일 또는 비밀번호가 잘못되었습니다.')
+  }
 }
 
 function loginWithProvider(provider: 'google' | 'kakao' | 'naver') {
   console.log(`${provider} 로그인 시도`)
-  // TODO: 각 provider에 맞는 OAuth2 로그인 창 열기
   window.location.href = `http://localhost:8080/oauth2/authorization/${provider}` // 예시 URI
 }
 </script>

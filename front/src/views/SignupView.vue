@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const router = useRouter()
 
 const email = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
-const name = ref('')
 const agree = ref(false)
 
 const emailError = ref('')
@@ -24,28 +24,36 @@ function validate() {
   return !(emailError.value || passwordError.value || passwordConfirmError.value || agreeError.value)
 }
 
-function submit() {
+async function submit() {
   if (!validate()) return
 
   console.log('회원가입 요청', {
     email: email.value,
     password: password.value,
-    name: name.value,
   })
 
-  router.push('/login')
+  try {
+    await axios.post('/api/v1/auth/signup', {
+      email: email.value,
+      password: password.value,
+    })
+
+    router.push('/login')
+  } catch (error) {
+    console.error('회원가입 실패', error)
+    alert('회원가입에 실패했습니다. 다시 시도해주세요.')
+  }
 }
 
 function loginWithProvider(provider: 'google' | 'kakao' | 'naver') {
   console.log(`${provider} 로그인 시도`)
-  // TODO: 각 provider에 맞는 OAuth2 로그인 창 열기
-  window.location.href = `http://localhost:8080/oauth2/authorization/${provider}` // 예시 URI
+  window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/${provider}` // 예시 URI
 }
 </script>
 
 <template>
   <v-container fluid class="d-flex justify-center">
-    <div class="w-100" style="max-width: 420px; margin-top: 0px;">
+    <div class="w-100" style="max-width: 400px; min-height: 100vh;">
       <div class="text-center mb-6">
         <v-img src="/logo.svg" width="80" class="mx-auto mb-2" />
         <h1 class="text-h6 font-weight-bold">회원가입</h1>

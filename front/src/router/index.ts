@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from "@/views/HomeView.vue";
 import ProductCreateForm from "@/components/ProductCreateForm.vue";
 import ProductDetail from "@/components/ProductDetail.vue";
@@ -25,12 +25,20 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/LoginView.vue')
+      component: () => import('@/views/LoginView2.vue'),
+      meta: { requiresAuth: false, hideHeader: true }
     },
     {
       path: '/signup',
       name: 'signup',
-      component: () => import('@/views/SignupView.vue')
+      component: () => import('@/views/SignupView2.vue'),
+      meta: { requiresAuth: false, hideHeader: true }
+    },
+    {
+      path: '/oauth2/redirect',
+      name: 'oauth2-redirect',
+      component: () => import('@/components/LoginRedirect.vue'),
+      meta: { requiresAuth: false, hideHeader: true }
     }
   ],
 })

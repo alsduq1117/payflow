@@ -1,6 +1,4 @@
-<script setup lang="ts">
-import PaymentButton from "@/components/PaymentButton.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <footer class="footer">

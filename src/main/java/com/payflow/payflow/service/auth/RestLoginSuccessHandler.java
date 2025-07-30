@@ -30,10 +30,10 @@ public class RestLoginSuccessHandler implements AuthenticationSuccessHandler {
 
         ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .secure(false)
+                .secure(true)
                 .sameSite("None")
                 .path("/")
-                .maxAge(Duration.ofDays(30))
+                .maxAge(Duration.ofDays(7))
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());

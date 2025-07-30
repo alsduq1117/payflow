@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
+import { computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
+import AppHeader from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 
 const route = useRoute();
+const auth = useAuthStore();
+const showHeader = computed(() => !route.meta.hideHeader);
 
-const isAuthPage = () => {
-  const authPaths = ['/login', '/signup']; // 실제 경로로 수정
-  return authPaths.includes(route.path);
-};
+onMounted(() => {
+  auth.initAuth();
+});
 </script>
-
 
 <template>
   <v-app>
-    <Header v-if="!isAuthPage()" />
+    <AppHeader v-if="showHeader" />
     <v-main style="background-color: #ffffff">
       <router-view/>
     </v-main>
