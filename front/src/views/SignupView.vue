@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import axios from 'axios'
+import { ref } from 'vue'
+import { useAuthForm, useFormValidators } from '@/composables'
+import SocialLogin from '@/components/SocialLogin.vue'
 
-const router = useRouter()
+const { validateRequired, validatePasswordMatch, validateAgreement } = useFormValidators()
+const { emailSignup, loginWithProvider, errorMessage } = useAuthForm()
 
 const email = ref('')
 const password = ref('')
@@ -15,39 +16,15 @@ const passwordError = ref('')
 const passwordConfirmError = ref('')
 const agreeError = ref('')
 
-function validate() {
-  emailError.value = email.value ? '' : '이메일을 입력해주세요.'
-  passwordError.value = password.value ? '' : '비밀번호를 입력해주세요.'
-  passwordConfirmError.value = password.value === passwordConfirm.value ? '' : '비밀번호가 일치하지 않습니다.'
-  agreeError.value = agree.value ? '' : '개인정보 수집 및 이용에 동의해주세요.'
-
-  return !(emailError.value || passwordError.value || passwordConfirmError.value || agreeError.value)
-}
-
 async function submit() {
-  if (!validate()) return
+  emailError.value = validateRequired(email.value, '이메일')
+  passwordError.value = validateRequired(password.value, '비밀번호')
+  passwordConfirmError.value = validatePasswordMatch(password.value, passwordConfirm.value)
+  agreeError.value = validateAgreement(agree.value)
 
-  console.log('회원가입 요청', {
-    email: email.value,
-    password: password.value,
-  })
+  if (emailError.value || passwordError.value || passwordConfirmError.value || agreeError.value) return
 
-  try {
-    await axios.post('/api/v1/auth/signup', {
-      email: email.value,
-      password: password.value,
-    })
-
-    router.push('/login')
-  } catch (error) {
-    console.error('회원가입 실패', error)
-    alert('회원가입에 실패했습니다. 다시 시도해주세요.')
-  }
-}
-
-function loginWithProvider(provider: 'google' | 'kakao' | 'naver') {
-  console.log(`${provider} 로그인 시도`)
-  window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/${provider}` // 예시 URI
+  await emailSignup(email.value, password.value)
 }
 </script>
 
@@ -58,6 +35,8 @@ function loginWithProvider(provider: 'google' | 'kakao' | 'naver') {
         <v-img src="/logo.svg" width="80" class="mx-auto mb-2" />
         <h1 class="text-h6 font-weight-bold">회원가입</h1>
       </div>
+
+      <v-alert v-if="errorMessage" type="error" class="mb-4">{{ errorMessage }}</v-alert>
 
       <v-form @submit.prevent="submit">
         <v-text-field
@@ -89,60 +68,15 @@ function loginWithProvider(provider: 'google' | 'kakao' | 'naver') {
 
         <v-checkbox
           v-model="agree"
-          label="[필수] 개인정보 수집 및 이용동의"
           :error-messages="agreeError"
+          label="[필수] 개인정보 수집 및 이용동의"
           class="mb-4 rounded-lg"
         />
 
         <v-btn type="submit" block color="#1E88E5" size="large" class="mt-4 rounded-lg">가입하기</v-btn>
 
-        <div class="d-flex align-center my-6">
-          <div class="flex-grow-1" style="height: 1px; background-color: #E0E0E0;"></div>
-          <span class="px-4 text-caption text-grey">간편 회원가입</span>
-          <div class="flex-grow-1" style="height: 1px; background-color: #E0E0E0;"></div>
-        </div>
-
-        <div class="d-flex justify-center mt-5">
-          <img
-            src="/social/google.png"
-            alt="Google"
-            @click="loginWithProvider('google')"
-            class="sns-icon me-10"
-          />
-          <img
-            src="/social/kakao.png"
-            alt="Kakao"
-            @click="loginWithProvider('kakao')"
-            class="sns-icon me-10"
-          />
-          <img
-            src="/social/naver.png"
-            alt="Naver"
-            @click="loginWithProvider('naver')"
-            class="sns-icon"
-          />
-        </div>
+        <SocialLogin label="회원가입" :providers="['google', 'kakao', 'naver']" @login="loginWithProvider" />
       </v-form>
     </div>
   </v-container>
 </template>
-
-<style scoped>
-.v-btn img {
-  margin-right: 8px;
-}
-
-.sns-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-.sns-icon:hover {
-  transform: scale(1.1);
-  opacity: 0.85;
-}
-</style>
-
