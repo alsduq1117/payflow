@@ -8,6 +8,7 @@ import com.payflow.payflow.exception.auth.UserNotFoundException;
 import com.payflow.payflow.repository.auth.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,5 +39,15 @@ public class AuthService {
 
         String newAccessToken = jwtUtil.generateAccessToken(email, user.getRoles(), user.getProvider());
         return new TokenResponse(newAccessToken);
+    }
+
+    public ResponseCookie createLogoutCookie() {
+        return ResponseCookie.from("refreshToken", "")
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .path("/")
+                .maxAge(0)
+                .build();
     }
 }
