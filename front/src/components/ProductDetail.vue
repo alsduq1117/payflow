@@ -2,19 +2,14 @@
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import PaymentButton from '@/components/PaymentButton.vue'
+import { useAuthStore } from '@/stores/auth'
+import type {Product} from "@/types";
 
 const props = defineProps<{ productId: string }>()
-
+const product = ref<Product | null>(null)
 const tab = ref('details')
-const product = ref<null | {
-  id: number,
-  name: string,
-  price: number,
-  fileUrl: string,
-  thumbnailUrl: string,
-  description: string,
-  sellerId: number
-}>(null)
+const authStore = useAuthStore()
+const buyerId = Number(authStore.user?.id)
 
 onMounted(async () => {
   try {
@@ -36,30 +31,16 @@ onMounted(async () => {
 
       <v-col cols="12" md="6" class="ps-md-15">
         <h1 class="text-h4 font-weight-bold mb-2">{{ product.name }}</h1>
-        <p class="text-body-1 text-grey-darken-1 mb-10">키르미뇨프</p>
+        <p class="text-body-1 text-grey-darken-1 mb-10">{{ product.sellerNickname }}</p>
         <h2 class="text-h5 font-weight-bold mb-5">{{ product.price.toLocaleString() }}원</h2>
 
 
         <v-row class="mt-6" align="center" justify="start">
-          <!-- 장바구니 버튼 -->
-          <v-btn
-            class="text-subtitle-1 font-weight-medium me-3"
-            style="height: 48px; min-width: 160px; border-radius: 6px; border: 1.5px solid #3478ff; color: #3478ff; background-color: #fff;"
-            variant="outlined"
-            elevation="0"
-          >
+          <v-btn class="text-subtitle-1 font-weight-medium me-3" style="height: 48px; min-width: 160px; border-radius: 6px; border: 1.5px solid #3478ff; color: #3478ff; background-color: #fff;" variant="outlined" elevation="0">
             장바구니 담기
           </v-btn>
 
-          <!-- 바로 구매 버튼 -->
-          <PaymentButton
-            :buyer-id="1"
-            :product-ids="[product.id]"
-            class="text-subtitle-1 font-weight-bold d-flex align-center justify-center"
-            style="height: 48px; min-width: 160px; border-radius: 6px; background-color: #3478ff; color: #fff;"
-          >
-            바로구매
-            <v-icon size="18" class="ms-2">mdi-chevron-right</v-icon>
+          <PaymentButton :buyer-id= "buyerId" :product-ids="[product.id]" class="text-subtitle-1 font-weight-bold d-flex align-center justify-center" style="height: 48px; min-width: 160px; border-radius: 6px; background-color: #3478ff; color: #fff;">
           </PaymentButton>
         </v-row>
         <p class="text-caption text-grey mt-4">

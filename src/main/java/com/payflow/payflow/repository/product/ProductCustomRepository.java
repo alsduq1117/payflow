@@ -1,10 +1,14 @@
 package com.payflow.payflow.repository.product;
 
-import com.payflow.payflow.domain.product.Product;
 import com.payflow.payflow.dto.product.ProductPageRequest;
-import org.springframework.data.domain.Page;
+import com.payflow.payflow.dto.product.ProductResponse;
+import org.springframework.data.domain.PageImpl;
+
+import java.util.Optional;
 
 public interface ProductCustomRepository {
 
-    Page<Product> getProductPage(ProductPageRequest productPageRequest);
+    PageImpl<ProductResponse> getProductPage(ProductPageRequest productPageRequest);
+
+    Optional<ProductResponse> findByIdWithSellerNickname(Long productId);
 }

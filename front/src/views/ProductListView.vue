@@ -12,9 +12,6 @@ const isLoading = ref(false)
 
 const fetchProducts = async () => {
   if (isLoading.value || (totalPages.value && page.value > totalPages.value)) return;
-
-
-
   isLoading.value = true;
   try {
     const res = await axios.get('/api/v1/products', {
@@ -69,9 +66,11 @@ onUnmounted(() => {
           hover
         >
           <v-img :src="product.thumbnailUrl" height="250" cover class="mb-2" />
-          <div class="text-body-1 font-weight-medium mb-4">
-            {{ product.name }}
+          <div style="display: flex; justify-content: space-between;" class="text-body-1 font-weight-medium mb-4">
+            <span>{{ product.name }}</span>
+            <span style="font-size: 0.9em; color: #888;">{{ product.sellerNickname }}</span>
           </div>
+
           <div class="text-subtitle-1 font-weight-bold text-black">
             {{ product.price.toLocaleString() }}원
           </div>

@@ -3,4 +3,7 @@ export interface Product {
   name: string
   price: number
   thumbnailUrl: string
+  fileUrl: string
+  description: string
+  sellerNickname: string
 }

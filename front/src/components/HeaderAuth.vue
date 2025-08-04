@@ -7,7 +7,7 @@ defineProps({
 
 const emit = defineEmits(['logout']);
 const userMenuItems = ref([
-  { to: '/profile', title: '주문목록' },
+  { to: '/mypage', title: '마이페이지' },
   { action: 'logout', title: '로그아웃' }
 ]);
 </script>
@@ -15,7 +15,7 @@ const userMenuItems = ref([
 <template>
   <template v-if="isLoggedIn">
     <div class="header-right">
-      <v-menu open-on-hover>
+      <v-menu open-on-hover location="bottom" origin="right">
         <template #activator="{ props }">
           <div v-bind="props" class="icon-wrapper">
             <v-icon size="30" color="#1E2D60">mdi-account-circle</v-icon>
@@ -32,17 +32,9 @@ const userMenuItems = ref([
         </v-list>
       </v-menu>
 
-      <v-tooltip text="장바구니" location="bottom" color="white">
-        <template #activator="{ props }">
-          <router-link
-            to="/cart"
-            class="cart-icon-link icon-wrapper"
-            v-bind="props"
-          >
-            <v-icon start size="30" color="#1E2D60">mdi-cart</v-icon>
-          </router-link>
-        </template>
-      </v-tooltip>
+      <router-link to="/cart" class="cart-icon-link icon-wrapper" aria-label="장바구니">
+        <v-icon start size="30" color="#1E2D60">mdi-cart</v-icon>
+      </router-link>
     </div>
   </template>
 
