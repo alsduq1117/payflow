@@ -33,11 +33,8 @@ import java.util.Arrays;
 @Slf4j
 public class SecurityConfig {
 
-    // JWT 인증 필터 (요청 시 JWT 검증)
     private final JwtAuthenticationFilter jwtAuthFilter;
-    // JWT 인증 실패 핸들러
     private final JwtAuthenticationEntryPoint jwtEntryPoint;
-    // 사용자 상세 서비스 (DB에서 사용자 정보 조회)
     private final CustomUserDetailsService userDetailsService;
     private final ObjectMapper objectMapper;
     private final Oauth2SuccessHandler oauth2SuccessHandler;
@@ -70,7 +67,9 @@ public class SecurityConfig {
                                 "/api/v1/products",
                                 "/api/v1/products/**",
                                 "/api/v1/s3/presigned-url",
-                                "/api/v1/auth/signup"
+                                "/api/v1/auth/signup",
+                                "/api/v1/auth/refresh",
+                                "/api/v1/auth/logout"
                         ).permitAll()
                         // ADMIN 역할만 접근 가능한 경로
                         .requestMatchers(
