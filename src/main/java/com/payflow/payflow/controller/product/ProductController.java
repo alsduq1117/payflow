@@ -22,25 +22,25 @@ public class ProductController {
     @PostMapping("")
     public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductCreate productCreate) {
         ProductResponse productResponse = productService.create(productCreate);
-        return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productResponse);
     }
 
     @GetMapping("/{productId}")
     public ResponseEntity<ProductResponse> getProduct(@PathVariable(name = "productId") Long productId) {
         ProductResponse productResponse = productService.get(productId);
-        return new ResponseEntity<>(productResponse, HttpStatus.OK);
+        return ResponseEntity.ok(productResponse);
     }
 
     @GetMapping("")
     public ResponseEntity<PagingResponse<ProductResponse>> getProductList(@ModelAttribute ProductPageRequest productPageRequest) {
         PagingResponse<ProductResponse> productList = productService.getList(productPageRequest);
-        return new ResponseEntity<>(productList, HttpStatus.OK);
+        return ResponseEntity.ok(productList);
     }
 
     @PutMapping("/{productId}")
     public ResponseEntity<ProductResponse> editProduct(@PathVariable(name = "productId") Long productId, @RequestBody @Valid ProductEdit productEdit) {
         ProductResponse productResponse = productService.edit(productId, productEdit);
-        return new ResponseEntity<>(productResponse, HttpStatus.OK);
+        return ResponseEntity.ok(productResponse);
     }
 
     @DeleteMapping("/{productId}")
