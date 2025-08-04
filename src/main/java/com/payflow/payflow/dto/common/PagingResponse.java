@@ -29,4 +29,11 @@ public class PagingResponse<T> {
                     }
                 }).collect(Collectors.toList());
     }
+
+    public PagingResponse(Page<T> page) {
+        this.page = page.getNumber() + 1;
+        this.size = page.getSize();
+        this.totalCount = page.getTotalElements();
+        this.items = page.getContent();
+    }
 }

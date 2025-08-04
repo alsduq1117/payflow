@@ -1,6 +1,7 @@
 package com.payflow.payflow.dto.product;
 
 import com.payflow.payflow.domain.product.Product;
+import jakarta.annotation.Nullable;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -21,8 +22,9 @@ public class ProductResponse {
 
     private final Long sellerId;
 
-    @Builder
-    public ProductResponse(Long id, String name, Integer price, String fileUrl, String thumbnailUrl, String description, Long sellerId) {
+    private final String sellerNickname;
+
+    public ProductResponse(Long id, String name, Integer price, String fileUrl, String thumbnailUrl, String description, Long sellerId, String sellerNickname) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -30,29 +32,19 @@ public class ProductResponse {
         this.thumbnailUrl = thumbnailUrl;
         this.description = description;
         this.sellerId = sellerId;
+        this.sellerNickname = sellerNickname;
     }
 
-    public ProductResponse(Product product) {
-        this.id = product.getId();
-        this.name = product.getName();
-        this.price = product.getPrice();
-        this.fileUrl = product.getFileUrl();
-        this.thumbnailUrl = product.getThumbnailUrl();
-        this.description = product.getDescription();
-        this.sellerId = product.getSellerId();
-    }
-
-
-
-    public static ProductResponse from(Product product) {
-        return ProductResponse.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .price(product.getPrice())
-                .fileUrl(product.getFileUrl())
-                .thumbnailUrl(product.getThumbnailUrl())
-                .description(product.getDescription())
-                .sellerId(product.getSellerId())
-                .build();
+    public static ProductResponse from(Product product, String sellerNickname) {
+        return new ProductResponse(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getFileUrl(),
+                product.getThumbnailUrl(),
+                product.getDescription(),
+                product.getSellerId(),
+                sellerNickname
+        );
     }
 }

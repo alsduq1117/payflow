@@ -1,5 +1,6 @@
 package com.payflow.payflow.service.product;
 
+import com.payflow.payflow.domain.auth.User;
 import com.payflow.payflow.dto.product.ProductCreate;
 import com.payflow.payflow.dto.product.ProductEdit;
 import com.payflow.payflow.dto.product.ProductPageRequest;
@@ -14,6 +15,7 @@ import com.payflow.payflow.repository.product.ProductRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +30,7 @@ public class ProductService {
     @Transactional
     public ProductResponse create(ProductCreate productCreate, Long userId) {
 
-        userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
         Product product = Product.builder()
                 .name(productCreate.getName())
@@ -41,25 +43,23 @@ public class ProductService {
 
         productRepository.save(product);
 
-        return ProductResponse.from(product);
+        return ProductResponse.from(product, user.getNickname());
     }
 
 
     public ProductResponse get(Long productId) {
-        Product product = productRepository.findById(productId).orElseThrow(RuntimeException::new);
-        return ProductResponse.from(product);
+        return productRepository.findByIdWithSellerNickname(productId).orElseThrow(ProductNotFound::new);
     }
 
     public PagingResponse<ProductResponse> getList(ProductPageRequest productPageRequest) {
-        Page<Product> productPage = productRepository.getProductPage(productPageRequest);
-        return new PagingResponse<>(productPage, ProductResponse.class);
+        PageImpl<ProductResponse> productPage = productRepository.getProductPage(productPageRequest);
+        return new PagingResponse<>(productPage);
     }
 
     @Transactional
     public ProductResponse edit(Long productId, @Valid ProductEdit productEdit, Long userId) {
 
-        userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFound::new);
 
         ProductEditor.ProductEditorBuilder productEditorBuilder = product.toEditor();
@@ -74,7 +74,7 @@ public class ProductService {
 
         product.edit(productEditor);
 
-        return ProductResponse.from(product);
+        return ProductResponse.from(product, user.getNickname());
     }
 
     @Transactional
