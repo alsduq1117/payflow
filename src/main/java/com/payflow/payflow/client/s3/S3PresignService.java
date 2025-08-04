@@ -3,6 +3,7 @@ package com.payflow.payflow.client.s3;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+import com.payflow.payflow.dto.s3.PresignedUrlRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,19 +20,18 @@ public class S3PresignService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    // 파일 업로드 (UUID 미적용)
-    public String generatePresignedUrl(String fileName, String contentType, String folder) {
-        String fullPath = folder + "/" + UUID.randomUUID() + "_" + fileName;
+    public String generatePresignedUrl(PresignedUrlRequest presignedUrlRequest) {
+        String fullPath = presignedUrlRequest.getFolder() + "/" + UUID.randomUUID() + "_" + presignedUrlRequest.getFileName();
 
-        Date expiration = new Date(System.currentTimeMillis() + 1000 * 60 * 5); // 5분 유효
+        Date expiration = new Date(System.currentTimeMillis() + 1000 * 60 * 5);
 
-        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucket, fullPath)
+        GeneratePresignedUrlRequest s3PresignedRequest  = new GeneratePresignedUrlRequest(bucket, fullPath)
                 .withMethod(HttpMethod.PUT)
                 .withExpiration(expiration);
-        request.setContentType(contentType);
+        s3PresignedRequest.setContentType(presignedUrlRequest.getContentType());
 
-        URL url = amazonS3.generatePresignedUrl(request);
-        return url.toString(); // 프론트에서 이 URL로 파일 PUT 가능
+        URL url = amazonS3.generatePresignedUrl(s3PresignedRequest);
+        return url.toString();
     }
 
 }

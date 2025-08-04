@@ -5,10 +5,15 @@ import router from "@/router";
 axios.defaults.withCredentials = true
 
 axios.interceptors.request.use((config) => {
-  const auth = useAuthStore()
-  if (!config.url?.startsWith('/api/v1/auth') && auth.accessToken) {
-    config.headers.Authorization = `Bearer ${auth.accessToken}`
+  const isS3 = config.url?.includes('.s3.') && config.url.includes('.amazonaws.com')
+
+  if (!isS3) {
+    const auth = useAuthStore()
+    if (auth.accessToken) {
+      config.headers.Authorization = `Bearer ${auth.accessToken}`
+    }
   }
+
   return config
 })
 

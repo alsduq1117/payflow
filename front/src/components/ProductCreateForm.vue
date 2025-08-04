@@ -32,14 +32,12 @@ const rules = {
 
 // Presigned URL 요청 함수
 const getPresignedUrl = async (file: File, folder: string): Promise<string> => {
-  const res = await axios.post('/api/v1/s3/presigned-url', null, {
-    params: {
-      fileName: file.name,
-      contentType: file.type,
-      folder
-    }
+  const res = await axios.post('/api/v1/s3/presigned-url',{
+    fileName: file.name,
+    contentType: file.type,
+    folder
   })
-  return res.data // presigned PUT URL
+  return res.data
 }
 
 // presigned URL로 실제 파일 PUT (S3 업로드)
