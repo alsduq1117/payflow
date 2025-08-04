@@ -7,7 +7,9 @@ import com.payflow.payflow.dto.common.PagingResponse;
 import com.payflow.payflow.dto.product.ProductResponse;
 import com.payflow.payflow.domain.product.Product;
 import com.payflow.payflow.dto.product.ProductEditor;
+import com.payflow.payflow.exception.auth.UserNotFoundException;
 import com.payflow.payflow.exception.product.ProductNotFound;
+import com.payflow.payflow.repository.auth.UserRepository;
 import com.payflow.payflow.repository.product.ProductRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,17 +23,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
     @Transactional
-    public ProductResponse create(ProductCreate productCreate) {
+    public ProductResponse create(ProductCreate productCreate, Long userId) {
+
+        userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+
         Product product = Product.builder()
                 .name(productCreate.getName())
                 .description(productCreate.getDescription())
                 .price(productCreate.getPrice())
-                .price(productCreate.getPrice())
                 .fileUrl(productCreate.getFileUrl())
                 .thumbnailUrl(productCreate.getThumbnailUrl())
-                .sellerId(1L) // task : UserPricipal 로 부터 sellerId 받아오기
+                .sellerId(userId)
                 .build();
 
         productRepository.save(product);
@@ -51,7 +56,10 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponse edit(Long productId, @Valid ProductEdit productEdit) {
+    public ProductResponse edit(Long productId, @Valid ProductEdit productEdit, Long userId) {
+
+        userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFound::new);
 
         ProductEditor.ProductEditorBuilder productEditorBuilder = product.toEditor();
@@ -70,7 +78,8 @@ public class ProductService {
     }
 
     @Transactional
-    public void delete(Long productId) {
+    public void delete(Long productId, Long userId) {
+        userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFound::new);
         productRepository.delete(product);
     }
