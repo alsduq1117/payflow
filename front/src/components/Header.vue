@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import {ref, onMounted, onUnmounted, computed} from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '@/stores/auth.ts';
 import { storeToRefs } from 'pinia';
 import HeaderNav from './HeaderNav.vue';
 import HeaderAuth from './HeaderAuth.vue';
+import axios from "axios";
 
-const router = useRouter();
 const auth = useAuthStore();
 const { accessToken } = storeToRefs(auth);
 const isLoggedIn = computed(() => !!accessToken.value);
@@ -16,9 +15,13 @@ const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
 };
 
-const logout = () => {
-  auth.clearAuth();
-  router.push('/');
+const logout = async () => {
+  try {
+    await axios.post('/api/v1/auth/logout');
+  } catch (e) {
+    console.warn('서버 로그아웃 실패:', e);
+  }
+  window.location.href = '/';
 };
 
 onMounted(() => {

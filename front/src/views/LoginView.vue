@@ -54,7 +54,7 @@ async function submit() {
 
       <SocialLogin label="로그인" @login="loginWithProvider" />
 
-      <div class="mt-8 text-body-2">
+      <div class="mt-10 text-body-2 d-flex justify-center">
         <router-link to="/signup" class="me-4 text-black text-decoration-none">회원가입</router-link>|
         <router-link to="/forgot" class="ms-4 text-black text-decoration-none">비밀번호 찾기</router-link>
       </div>

@@ -20,7 +20,7 @@ axios.interceptors.response.use(
 
     const isUnauthorized = error.response?.status === 401
     const isRefreshRequest = originalRequest.url?.includes('/api/v1/auth/refresh')
-    const isLoggedIn = !!auth.accessToken // ✅ 이 조건 추가
+    const isLoggedIn = !!auth.accessToken
 
     if (isUnauthorized && !originalRequest._retry && !isRefreshRequest && isLoggedIn) {
       originalRequest._retry = true

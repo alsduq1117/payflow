@@ -29,7 +29,7 @@ const fetchProducts = async () => {
     totalItems.value = res.data.totalCount;
     page.value += 1
   } catch (e) {
-    console.error('❌ 상품 목록 불러오기 실패:', e);
+    console.error('상품 목록 불러오기 실패:', e);
   } finally {
     isLoading.value = false;
   }

@@ -28,5 +28,4 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>로그인 처리 중...</div>
 </template>

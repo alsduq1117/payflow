@@ -10,7 +10,7 @@ const vuetify = createVuetify({
   components,
   directives,
   icons: {
-    defaultSet: 'mdi', // 👈 기본 아이콘 세트 지정
+    defaultSet: 'mdi', // 기본 아이콘 세트 지정
     aliases,
     sets: { mdi },
   },
