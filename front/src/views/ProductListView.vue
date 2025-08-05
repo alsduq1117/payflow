@@ -52,19 +52,8 @@ onUnmounted(() => {
 <template>
   <v-container>
     <v-row class="ma-10">
-      <v-col
-        v-for="product in products"
-        :key="product.id"
-        cols="12"
-        sm="6"
-        md="3"
-      >
-        <v-card
-          class="product-card pa-5"
-          :to="`/product/${product.id}`"
-          tag="router-link"
-          hover
-        >
+      <v-col v-for="product in products" :key="product.id" cols="12" sm="6" md="3">
+        <v-card class="product-card pa-5" :to="`/product/${product.id}`" tag="router-link" hover>
           <v-img :src="product.thumbnailUrl" height="250" cover class="mb-2" />
           <div style="display: flex; justify-content: space-between;" class="text-body-1 font-weight-medium mb-4">
             <span>{{ product.name }}</span>
@@ -83,10 +72,6 @@ onUnmounted(() => {
       <v-progress-circular indeterminate color="#1E2D60" />
     </v-row>
 
-    <!-- 마지막 페이지 알림 -->
-    <v-row justify="center" v-if="page >= totalPages && !isLoading" class="py-4">
-      <div class="text-grey">모든 상품을 불러왔습니다.</div>
-    </v-row>
   </v-container>
 </template>
 
