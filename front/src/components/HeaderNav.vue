@@ -1,10 +1,8 @@
 <script setup lang="ts">
 const navItems = [
   { path: '/product-create', label: '상품 등록' },
-  { path: '/api', label: '장바구니' },
-  { path: '/sandbox', label: '샌드박스' },
-  { path: '/support', label: '커뮤니티·지원' },
-  { path: '/blog', label: '블로그' },
+  { path: '/rest-docs', label: 'API 문서' },
+  { path: '/admin/dashboard', label: '관리자 페이지', noActive: true },
 ];
 </script>
 
