@@ -76,7 +76,7 @@ public class SecurityConfig {
                         ).permitAll()
                         // ADMIN 역할만 접근 가능한 경로
                         .requestMatchers(
-                                "/api/admin/**"
+                                "/api/v1/admin/**"
                         ).hasRole("ADMIN")
                         // 그 외 모든 요청은 인증 필요
                         .anyRequest().authenticated())
