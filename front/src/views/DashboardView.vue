@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import axios from 'axios'
+import axios from "@/plugins/axios.ts";
 
 export type Metrics = {
   todaySuccessCount: number

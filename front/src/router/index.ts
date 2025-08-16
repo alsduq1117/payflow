@@ -6,6 +6,7 @@ import DashboardView from "@/views/DashboardView.vue";
 import LoginRedirect from "@/components/LoginRedirect.vue";
 import SignupView from "@/views/SignupView.vue";
 import LoginView from "@/views/LoginView.vue";
+import PaymentListView from "@/views/PaymentListView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,17 +46,29 @@ const router = createRouter({
       meta: { requiresAuth: false, hideHeader: true }
     },
     {
-      path: '/admin',
-      name: 'admin',
+      path: '/admin/dashboard',
+      name: 'dashboard',
       component: DashboardView,
       meta: { showSidebar: true, hideHeader: false, hideFooter: true },
-      children: [
-        { path: 'dashboard', name: 'dashboard', component: DashboardView},
-        { path: 'orders', name: 'orders', component: DashboardView},
-        { path: 'settlement', name: 'settlement', component: DashboardView},
-        { path: 'monitoring', name: 'monitoring', component: DashboardView}
-      ],
-    }
+    },
+    {
+      path: '/admin/orders',
+      name: 'orders',
+      component: PaymentListView,
+      meta: { showSidebar: true, hideHeader: false, hideFooter: true },
+    },
+    {
+      path: '/admin/settlement',
+      name: 'settlement',
+      component: PaymentListView,
+      meta: { showSidebar: true, hideHeader: false, hideFooter: true },
+    },
+    {
+      path: '/admin/monitoring',
+      name: 'monitoring',
+      component: PaymentListView,
+      meta: { showSidebar: true, hideHeader: false, hideFooter: true },
+    },
   ],
 })
 
