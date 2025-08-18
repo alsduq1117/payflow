@@ -28,6 +28,8 @@ public class QPaymentOrder extends EntityPathBase<PaymentOrder> {
 
     public final NumberPath<Byte> failedCount = createNumber("failedCount", Byte.class);
 
+    public final NumberPath<Long> fee = createNumber("fee", Long.class);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final BooleanPath isLedgerUpdated = createBoolean("isLedgerUpdated");

@@ -8,6 +8,7 @@ import SignupView from "@/views/SignupView.vue";
 import LoginView from "@/views/LoginView.vue";
 import PaymentListView from "@/views/PaymentListView.vue";
 import SettlementView from "@/views/SettlementView.vue";
+import MonitoringDashboard from "@/views/MonitoringDashboard.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,7 +68,7 @@ const router = createRouter({
     {
       path: '/admin/monitoring',
       name: 'monitoring',
-      component: PaymentListView,
+      component: MonitoringDashboard,
       meta: { showSidebar: true, hideHeader: false, hideFooter: true },
     },
   ],

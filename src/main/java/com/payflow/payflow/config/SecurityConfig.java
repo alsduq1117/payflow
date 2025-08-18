@@ -72,7 +72,9 @@ public class SecurityConfig {
                                 "/api/v1/auth/logout",
                                 "/api/v1/checkout",
                                 "/api/v1/toss/confirm",
-                                "/api/v1/purchases/check"
+                                "/api/v1/purchases/check",
+                                "/actuator/health",
+                                "/actuator/prometheus"
                         ).permitAll()
                         // ADMIN 역할만 접근 가능한 경로
                         .requestMatchers(
