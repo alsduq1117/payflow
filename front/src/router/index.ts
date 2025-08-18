@@ -7,6 +7,7 @@ import LoginRedirect from "@/components/LoginRedirect.vue";
 import SignupView from "@/views/SignupView.vue";
 import LoginView from "@/views/LoginView.vue";
 import PaymentListView from "@/views/PaymentListView.vue";
+import SettlementView from "@/views/SettlementView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,7 +61,7 @@ const router = createRouter({
     {
       path: '/admin/settlement',
       name: 'settlement',
-      component: PaymentListView,
+      component: SettlementView,
       meta: { showSidebar: true, hideHeader: false, hideFooter: true },
     },
     {

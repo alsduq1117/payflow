@@ -69,6 +69,7 @@ public class PaymentStatusUpdateRepository {
         List<PaymentOrder> paymentOrders = selectPaymentOrders(command.getOrderId());
         insertPaymentHistory(paymentOrders, command.getStatus(), command.getFailure().toString());
         updatePaymentOrderStatus(paymentOrders, command.getStatus());
+        incrementPaymentOrderFailedCount(command);
         return true;
     }
 
@@ -139,5 +140,14 @@ public class PaymentStatusUpdateRepository {
                 .set(QPaymentEvent.paymentEvent.paymentKey, paymentKey)
                 .where(QPaymentEvent.paymentEvent.orderId.eq(orderId))
                 .execute();
+    }
+
+    private void incrementPaymentOrderFailedCount(PaymentStatusUpdateCommand command) {
+        QPaymentOrder po = QPaymentOrder.paymentOrder;
+
+        queryFactory.update(po)
+                .set(po.failedCount, po.failedCount.add(1)) // 기존 값 + 1
+                .where(po.orderId.eq(command.getOrderId()))
+                .execute(); // UPDATE 실행
     }
 }

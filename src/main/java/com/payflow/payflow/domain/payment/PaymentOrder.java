@@ -29,6 +29,9 @@ public class PaymentOrder extends BaseEntity {
     @Column(name = "amount", nullable = false)
     private Long amount;
 
+    @Column(name = "fee", nullable = false)
+    private Long fee;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_order_status")
     private PaymentStatus status;
@@ -47,12 +50,13 @@ public class PaymentOrder extends BaseEntity {
 
 
     @Builder
-    public PaymentOrder(Long paymentEventId, Long sellerId, Long productId, String orderId, Long amount, PaymentStatus status, Boolean isLedgerUpdated, Boolean isWalletUpdated, Byte failedCount, Byte threshold) {
+    public PaymentOrder(Long paymentEventId, Long sellerId, Long productId, String orderId, Long amount, Long fee, PaymentStatus status, Boolean isLedgerUpdated, Boolean isWalletUpdated, Byte failedCount, Byte threshold) {
         this.paymentEventId = paymentEventId;
         this.sellerId = sellerId;
         this.productId = productId;
         this.orderId = orderId;
         this.amount = amount;
+        this.fee = fee;
         this.status = status != null ? status : PaymentStatus.NOT_STARTED;
         this.isLedgerUpdated = isLedgerUpdated != null ? isLedgerUpdated : false;
         this.isWalletUpdated = isWalletUpdated != null ? isWalletUpdated : false;
