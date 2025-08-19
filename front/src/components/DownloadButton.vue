@@ -1,11 +1,16 @@
 <script setup lang="ts">
-defineProps<{ fileUrl: string }>()
+const props = defineProps<{ fileUrl: string }>();
 
 function downloadFile() {
-  const link = document.createElement('a')
-  link.href = "fileUrl"
-  link.download = ''
-  link.click()
+  if (!props.fileUrl) return;
+
+  const a = document.createElement('a');
+  a.href = props.fileUrl;
+  a.download = props.fileUrl.split('/').pop() || 'download';
+  a.target = '_blank'; // 일부 브라우저 호환
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 </script>
 

@@ -66,9 +66,7 @@ onMounted(async () => {
 
           <!-- 결제 완료한 경우: 다운로드 버튼만 노출 -->
           <template v-else-if="hasPurchased === true">
-            <DownloadButton
-              :file-url="product.fileUrl"
-            />
+            <DownloadButton :file-url="product.fileUrl"/>
           </template>
         </v-row>
       </v-col>

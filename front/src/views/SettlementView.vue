@@ -263,18 +263,6 @@ onMounted(() => {
         <template #top>
           <v-toolbar density="comfortable" color="transparent">
             <v-toolbar-title class="text-subtitle-1">판매자별 정산 개요</v-toolbar-title>
-            <v-spacer />
-            <v-text-field
-              v-model="sellerSearch"
-              density="compact"
-              style="max-width: 260px"
-              clearable
-              hide-details
-              label="닉네임 검색"
-              prepend-inner-icon="mdi-magnify"
-              @keydown.enter="() => { tableOptions.page = 1; reloadSellers() }"
-              @click:prepend-inner="() => { tableOptions.page = 1; reloadSellers() }"
-            />
           </v-toolbar>
         </template>
 
