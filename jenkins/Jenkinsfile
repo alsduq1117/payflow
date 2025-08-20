@@ -53,23 +53,15 @@ pipeline {
               sshTransfer(
                 sourceFiles: 'deploy/**',
                 remoteDirectory: '/home/ubuntu/app/deploy'
-              )
-            ]
-          )
-        ])
-        sshPublisher(publishers: [
-          sshPublisherDesc(
-            configName: 'ApplicationServer',
-            verbose: true,
-            transfers: [
+              ),
               // 실행
               sshTransfer(
                 execCommand: """
                   set -e
                   cd /home/ubuntu/app/deploy
                   echo "Using latest images"
-                  docker compose pull
-                  docker compose up -d
+                  docker compose -f docker-compose.yml pull
+                  docker compose -f docker-compose.yml up -d
                   docker image prune -f || true
                 """,
                 execTimeout: 180000
