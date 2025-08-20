@@ -42,7 +42,6 @@ pipeline {
         """
       }
     }
-
     stage('Deploy (Compose All)') {
       steps {
         sshPublisher(publishers: [
@@ -50,10 +49,20 @@ pipeline {
             configName: 'ApplicationServer',
             verbose: true,
             transfers: [
+              // 파일 복사
               sshTransfer(
                 sourceFiles: 'deploy/**',
                 remoteDirectory: '/home/ubuntu/app/deploy'
-              ),
+              )
+            ]
+          )
+        ])
+        sshPublisher(publishers: [
+          sshPublisherDesc(
+            configName: 'ApplicationServer',
+            verbose: true,
+            transfers: [
+              // 실행
               sshTransfer(
                 execCommand: """
                   set -e
