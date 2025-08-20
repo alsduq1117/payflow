@@ -1,8 +1,6 @@
 pipeline {
   agent any
-  tools {
-          jdk 'openjdk-17-jdk'
-      }
+  tools { jdk 'openjdk-17-jdk' }
 
   environment {
     BE_IMAGE = 'alsduq1117/payflow'
