@@ -58,16 +58,16 @@ pipeline {
               ),
               // 한 방 배포: 태그 주입 후 pull+up
               sshTransfer(
-                execCommand: '''
+                execCommand: """
                   set -e
                   cd /home/ubuntu/app/deploy
-                  export BE_TAG='''' + "${TAG}" + ''''
-                  export FE_TAG='''' + "${TAG}" + ''''
+                  export BE_TAG='${TAG}'
+                  export FE_TAG='${TAG}'
                   echo "Using BE_TAG=$BE_TAG, FE_TAG=$FE_TAG"
                   docker compose pull
                   docker compose up -d
                   docker image prune -f || true
-                ''',
+                """,
                 execTimeout: 180000
               )
             ]
