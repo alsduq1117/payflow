@@ -1,0 +1,79 @@
+pipeline {
+  agent any
+
+  environment {
+    BE_IMAGE = 'alsduq1117/payflow'
+    FE_IMAGE = 'alsduq1117/payflow-frontend'
+    TAG      = "build-${env.BUILD_NUMBER}"       // 불변 태그
+  }
+
+  stages {
+    stage('Clone') {
+      steps {
+        git branch: 'main', url: 'https://github.com/alsduq1117/payflow.git', credentialsId: 'alsduq1117'
+      }
+    }
+
+    stage('Build Backend') {
+      steps {
+        sh 'chmod +x gradlew'
+        sh './gradlew clean build'               // 또는 bootJar
+      }
+    }
+
+    stage('Docker Login') {
+      steps {
+        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+      }
+    }
+
+    stage('Build & Push BE/FE Images') {
+      steps {
+        sh """
+          docker build -t ${BE_IMAGE}:${TAG} -t ${BE_IMAGE}:latest .
+          docker push ${BE_IMAGE}:${TAG}
+          docker push ${BE_IMAGE}:latest
+        """
+        dir('frontend') {
+          sh """
+            docker build -t ${FE_IMAGE}:${TAG} -t ${FE_IMAGE}:latest .
+            docker push ${FE_IMAGE}:${TAG}
+            docker push ${FE_IMAGE}:latest
+          """
+        }
+      }
+    }
+
+    stage('Deploy (Compose All)') {
+      steps {
+        sshPublisher(publishers: [
+          sshPublisherDesc(
+            configName: 'ApplicationServer',
+            verbose: true,
+            transfers: [
+              // compose 및 설정 싱크(변경 있을 때만)
+              sshTransfer(
+                sourceFiles: 'deploy/**',
+                remoteDirectory: '/home/ubuntu/app/deploy'
+              ),
+              // 한 방 배포: 태그 주입 후 pull+up
+              sshTransfer(
+                execCommand: '''
+                  set -e
+                  cd /home/ubuntu/app/deploy
+                  export BE_TAG='''' + "${TAG}" + ''''
+                  export FE_TAG='''' + "${TAG}" + ''''
+                  echo "Using BE_TAG=$BE_TAG, FE_TAG=$FE_TAG"
+                  docker compose pull
+                  docker compose up -d
+                  docker image prune -f || true
+                ''',
+                execTimeout: 180000
+              )
+            ]
+          )
+        ])
+      }
+    }
+  }
+}

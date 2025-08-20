@@ -1,5 +1,9 @@
 version: "3.8"
 
+networks:
+  payflow-net:
+    external: true   # 애플리케이션과 같은 네트워크 재사용
+
 services:
   prometheus:
     image: prom/prometheus:v2.53.0
@@ -9,6 +13,8 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./data/prometheus:/prometheus
+    networks:
+      - payflow-net
     restart: unless-stopped
 
   grafana:
@@ -17,9 +23,11 @@ services:
     ports:
       - "3030:3000"
     environment:
-      - GF_SECURITY_ALLOW_EMBEDDING=true     # iframe 허용
-      - GF_AUTH_ANONYMOUS_ENABLED=true       # 익명 보기(내부용만!)
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
     volumes:
       - ./data/grafana:/var/lib/grafana
+    networks:
+      - payflow-net
     restart: unless-stopped
