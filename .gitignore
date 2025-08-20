@@ -56,7 +56,6 @@ coverage/
 ### 🔒 환경/보안 설정 파일 ###
 .env
 .env.*
-application.yml
 application-*.yaml
 application-*.properties
 
