@@ -7,7 +7,7 @@ build/
 
 !build/libs
 
-*.yml
+application-dev.yml
 !application.yml
 !application-prod.yml
 !deploy.yml
