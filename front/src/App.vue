@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
-import { useRoute } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
+import {useRoute} from 'vue-router';
+import {useAuthStore} from '@/stores/auth';
 import AppHeader from '@/components/Header.vue';
 import AppFooter from '@/components/Footer.vue';
 import SidebarMenu from "@/components/SidebarMenu.vue";
@@ -21,8 +21,8 @@ onMounted(async () => {
 
 <template>
   <v-app v-if="isAppReady">
-    <AppHeader v-if="showHeader" />
-    <SidebarMenu v-if="showSidebar" />
+    <AppHeader v-if="showHeader"/>
+    <SidebarMenu v-if="showSidebar"/>
     <v-main style="background-color: #ffffff">
       <router-view/>
     </v-main>
