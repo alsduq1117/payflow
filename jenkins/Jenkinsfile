@@ -31,17 +31,15 @@ pipeline {
     stage('Build & Push BE/FE Images') {
       steps {
         sh """
-          docker build -t ${BE_IMAGE}:${TAG} -t ${BE_IMAGE}:latest .
+          docker build -t ${BE_IMAGE}:${TAG} -t ${BE_IMAGE}:latest -f Dockerfile .
           docker push ${BE_IMAGE}:${TAG}
           docker push ${BE_IMAGE}:latest
         """
-        dir('frontend') {
-          sh """
-            docker build -t ${FE_IMAGE}:${TAG} -t ${FE_IMAGE}:latest .
-            docker push ${FE_IMAGE}:${TAG}
-            docker push ${FE_IMAGE}:latest
-          """
-        }
+        sh """
+          docker build -t ${FE_IMAGE}:${TAG} -t ${FE_IMAGE}:latest -f front/Dockerfile front
+          docker push ${FE_IMAGE}:${TAG}
+          docker push ${FE_IMAGE}:latest
+        """
       }
     }
 
