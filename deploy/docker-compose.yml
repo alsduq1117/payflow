@@ -12,7 +12,7 @@ volumes:
 
 services:
   backend:
-    image: alsduq1117/payflow:${BE_TAG:-latest}
+    image: alsduq1117/payflow:latest
     container_name: payflow
     env_file: ../.env
     ports:
@@ -21,7 +21,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    image: alsduq1117/payflow-frontend:${FE_TAG:-latest}
+    image: alsduq1117/payflow-frontend:latest
     container_name: payflow-front
     depends_on: [backend]
     ports:
