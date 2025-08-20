@@ -54,7 +54,12 @@ pipeline {
                 sourceFiles: '**/deploy/**',
                 remoteDirectory: '/home/ubuntu/app/deploy'
               ),
-              // 실행
+              sshTransfer(
+                          execCommand: """
+                            echo "== 복사된 파일 목록 =="
+                            ls -al /home/ubuntu/app/deploy
+                          """
+              ),
               sshTransfer(
                 execCommand: """
                   set -e
