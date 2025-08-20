@@ -4,7 +4,7 @@ pipeline {
   environment {
     BE_IMAGE = 'alsduq1117/payflow'
     FE_IMAGE = 'alsduq1117/payflow-frontend'
-    TAG      = "build-${env.BUILD_NUMBER}"       // 불변 태그
+    TAG      = "build-${env.BUILD_NUMBER}"
   }
 
   stages {
@@ -17,7 +17,7 @@ pipeline {
     stage('Build Backend') {
       steps {
         sh 'chmod +x gradlew'
-        sh './gradlew clean build'               // 또는 bootJar
+        sh './gradlew clean build'
       }
     }
 
@@ -51,12 +51,10 @@ pipeline {
             configName: 'ApplicationServer',
             verbose: true,
             transfers: [
-              // compose 및 설정 싱크(변경 있을 때만)
               sshTransfer(
                 sourceFiles: 'deploy/**',
                 remoteDirectory: '/home/ubuntu/app/deploy'
               ),
-              // 한 방 배포: 태그 주입 후 pull+up
               sshTransfer(
                 execCommand: """
                   set -e
