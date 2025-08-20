@@ -15,10 +15,17 @@ pipeline {
       }
     }
 
-    stage('Build Backend') {
+    stage('Build (BE)') {
+      agent {
+        docker {
+          image 'eclipse-temurin:17-jdk'   // 또는 'amazoncorretto:17'
+          args '-u root:root'
+        }
+      }
       steps {
+        sh 'java -version'                 // 17 확인
         sh 'chmod +x gradlew'
-        sh './gradlew clean build'
+        sh './gradlew clean build --no-daemon --info --stacktrace'
       }
     }
 
