@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import { useRouter } from 'vue-router'
+import {useRouter} from 'vue-router'
 import type {VForm} from 'vuetify/components'
 import axios from "axios";
 
@@ -32,7 +32,7 @@ const rules = {
 
 // Presigned URL 요청 함수
 const getPresignedUrl = async (file: File, folder: string): Promise<string> => {
-  const res = await axios.post('/api/v1/s3/presigned-url',{
+  const res = await axios.post('/api/v1/s3/presigned-url', {
     fileName: file.name,
     contentType: file.type,
     folder
