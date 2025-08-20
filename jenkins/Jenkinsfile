@@ -51,7 +51,7 @@ pipeline {
             transfers: [
               // 파일 복사
               sshTransfer(
-                sourceFiles: 'deploy/**',
+                sourceFiles: '**/deploy/**',
                 remoteDirectory: '/home/ubuntu/app/deploy'
               ),
               // 실행
