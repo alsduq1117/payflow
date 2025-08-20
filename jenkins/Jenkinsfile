@@ -14,6 +14,17 @@ pipeline {
       }
     }
 
+    steps {
+      sh 'echo "=== NODE INFO ==="; hostname; uname -a'
+      sh 'echo "=== WHOAMI ==="; whoami'
+      sh 'echo "=== /etc/os-release ==="; cat /etc/os-release || true'
+      sh 'echo "=== which java ==="; which java || true'
+      sh 'echo "=== java -version ==="; java -version || true'
+      sh 'echo "=== JAVA_HOME ==="; echo "$JAVA_HOME" || true'
+      sh 'chmod +x gradlew'
+      sh './gradlew --version || true'
+    }
+
     stage('Build Backend') {
       steps {
         sh 'chmod +x gradlew'
