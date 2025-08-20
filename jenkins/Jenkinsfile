@@ -1,6 +1,8 @@
 pipeline {
   agent any
-  tools { jdk 'openjdk-17' }
+  tools {
+          jdk 'openjdk-17-jdk'
+      }
 
   environment {
     BE_IMAGE = 'alsduq1117/payflow'
@@ -15,17 +17,10 @@ pipeline {
       }
     }
 
-    stage('Build (BE)') {
-      agent {
-        docker {
-          image 'eclipse-temurin:17-jdk'
-          args '-u root:root'
-        }
-      }
+    stage('Build Backend') {
       steps {
-        sh 'java -version'                 // 17 확인
         sh 'chmod +x gradlew'
-        sh './gradlew clean build --no-daemon --info --stacktrace'
+        sh './gradlew clean build'
       }
     }
 
