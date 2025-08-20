@@ -25,7 +25,7 @@ public class S3PresignService {
 
         Date expiration = new Date(System.currentTimeMillis() + 1000 * 60 * 5);
 
-        GeneratePresignedUrlRequest s3PresignedRequest  = new GeneratePresignedUrlRequest(bucket, fullPath)
+        GeneratePresignedUrlRequest s3PresignedRequest = new GeneratePresignedUrlRequest(bucket, fullPath)
                 .withMethod(HttpMethod.PUT)
                 .withExpiration(expiration);
         s3PresignedRequest.setContentType(presignedUrlRequest.getContentType());
