@@ -58,9 +58,7 @@ pipeline {
                 execCommand: """
                   set -e
                   cd /home/ubuntu/app/deploy
-                  export BE_TAG=latest
-                  export FE_TAG=latest
-                  echo "Using BE_TAG=$BE_TAG, FE_TAG=$FE_TAG"
+                  echo "Using latest images"
                   docker compose pull
                   docker compose up -d
                   docker image prune -f || true
