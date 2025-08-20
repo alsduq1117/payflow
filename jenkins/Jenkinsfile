@@ -18,7 +18,7 @@ pipeline {
     stage('Build (BE)') {
       agent {
         docker {
-          image 'eclipse-temurin:17-jdk'   // 또는 'amazoncorretto:17'
+          image 'amazoncorretto:17'
           args '-u root:root'
         }
       }
