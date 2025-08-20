@@ -34,13 +34,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <v-app-bar
-    app
-    height="52"
-    color="white"
-    :elevation="isScrolled ? 2 : 0"
-    flat
-  >
+  <v-app-bar app height="52" color="white" :elevation="isScrolled ? 2 : 0" flat>
     <v-container fluid class="header-container">
       <HeaderNav />
       <HeaderAuth :is-logged-in="isLoggedIn" @logout="logout" />
