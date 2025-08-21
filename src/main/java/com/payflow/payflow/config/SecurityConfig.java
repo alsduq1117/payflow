@@ -74,13 +74,13 @@ public class SecurityConfig {
                                 "/api/v1/toss/confirm",
                                 "/api/v1/purchases/check",
                                 "/actuator/health",
-                                "/actuator/prometheus"
+                                "/actuator/prometheus",
+                                "/api/v1/admin/**"
                         ).permitAll()
                         // ADMIN 역할만 접근 가능한 경로
-                        .requestMatchers(
-                                "/api/v1/admin/**"
-                        ).hasRole("ADMIN")
-                        // 그 외 모든 요청은 인증 필요
+//                        .requestMatchers(
+//                                "/api/v1/admin/**"
+//                        ).hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(endpoint -> endpoint
