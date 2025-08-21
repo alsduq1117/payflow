@@ -1,4 +1,4 @@
-name: payflow-stack
+name: payflow
 
 networks:
   payflow-net:
@@ -40,14 +40,12 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    depends_on: [prometheus]
+    depends_on: [ prometheus ]
+    ports:
+      - "3000:3000"                # 외부에서 직접 접속 유지
     environment:
-      - GF_SERVER_ROOT_URL=https://payflow.my/grafana
-      - GF_SERVER_SERVE_FROM_SUB_PATH=true
       - GF_SECURITY_ALLOW_EMBEDDING=true
-      - GF_SECURITY_COOKIE_SAMESITE=None
-      - GF_SECURITY_COOKIE_SECURE=true
     volumes:
       - grafana-data:/var/lib/grafana
-    networks: [payflow-net]
+    networks: [ payflow-net ]
     restart: unless-stopped
