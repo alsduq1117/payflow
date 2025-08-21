@@ -133,7 +133,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigSource() {
         CorsConfiguration config = new CorsConfiguration();
         // 허용할 오리진 목록
-        config.setAllowedOrigins(Arrays.asList("https://production.com", "http://localhost:3000"));
+        config.setAllowedOrigins(Arrays.asList("https://payflow.my", "http://localhost:3000"));
         // 허용할 HTTP 메소드
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         // 허용할 헤더
