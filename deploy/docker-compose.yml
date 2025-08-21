@@ -25,7 +25,7 @@ services:
     networks: [ payflow-net ]
     restart: unless-stopped
     volumes:
-      - ../front/dist:/usr/share/nginx/html:ro
+      - ./front/dist:/usr/share/nginx/html:ro
       - ./nginx/conf.d/:/etc/nginx/conf.d/:ro
 
   prometheus:
