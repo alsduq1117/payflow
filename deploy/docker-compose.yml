@@ -25,8 +25,8 @@ services:
     networks: [ payflow-net ]
     restart: unless-stopped
     volumes:
-      - ./front/dist:/usr/share/nginx/html:ro
-      - ./nginx/conf.d/:/etc/nginx/conf.d/:ro
+      - /home/ubuntu/app/deploy/front/dist:/usr/share/nginx/html:ro
+      - /home/ubuntu/app/deploy/nginx/conf.d:/etc/nginx/conf.d:ro
 
   prometheus:
     image: prom/prometheus:v2.53.0
