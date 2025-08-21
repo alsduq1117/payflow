@@ -26,7 +26,6 @@ services:
     restart: unless-stopped
     volumes:
       - ../front/dist:/usr/share/nginx/html:ro
-      - ./nginx/payflow.conf:/etc/nginx/conf.d/payflow.conf:ro
       - ./nginx/conf.d/:/etc/nginx/conf.d/:ro
 
   prometheus:
