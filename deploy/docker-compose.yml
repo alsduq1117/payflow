@@ -1,4 +1,4 @@
-name: payflow
+name: payflow-stack
 
 networks:
   payflow-net:
@@ -42,7 +42,7 @@ services:
     image: grafana/grafana:latest
     depends_on: [ prometheus ]
     ports:
-      - "3000:3000"                # 외부에서 직접 접속 유지
+      - "3030:3000"
     environment:
       - GF_SECURITY_ALLOW_EMBEDDING=true
     volumes:
