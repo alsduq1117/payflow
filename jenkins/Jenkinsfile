@@ -36,7 +36,7 @@ pipeline {
           docker push ${BE_IMAGE}:latest
         """
         sh """
-          docker build -t ${FE_IMAGE}:${TAG} -t ${FE_IMAGE}:latest -f front/Dockerfile front
+          docker build --pull --no-cache -t ${FE_IMAGE}:${TAG} -t ${FE_IMAGE}:latest -f front/Dockerfile front
           docker push ${FE_IMAGE}:${TAG}
           docker push ${FE_IMAGE}:latest
         """
