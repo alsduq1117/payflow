@@ -11,7 +11,6 @@ volumes:
 services:
   backend:
     image: alsduq1117/payflow:latest
-    container_name: payflow
     env_file: ../.env
     ports:
       - "8080:8080"           # 외부 직접 접근 안 쓰면 주석 처리 가능
@@ -20,7 +19,6 @@ services:
 
   frontend:
     image: alsduq1117/payflow-frontend:latest
-    container_name: payflow-front
     depends_on: [backend]
     ports:
       - "80:80"
@@ -29,7 +27,6 @@ services:
 
   prometheus:
     image: prom/prometheus:v2.53.0
-    container_name: prometheus
     depends_on: [backend]
     ports:
       - "9090:9090"
@@ -41,7 +38,6 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
     depends_on: [prometheus]
     ports:
       - "3030:3000"
