@@ -10,10 +10,7 @@ export function useAuthForm() {
 
   // 소셜 로그인 공통 함수
   const loginWithProvider = (provider: 'google' | 'kakao' | 'naver') => {
-    const base = (import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/+$/, '');
-    const path = `/oauth2/authorization/${provider}`;
-    const url  = base ? `${base}${path}` : path; // base가 없으면 동일 도메인으로
-    window.location.href = url;
+    window.location.href = `/oauth2/authorization/${provider}`;
   }
 
   // 이메일 로그인

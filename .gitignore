@@ -54,7 +54,7 @@ test-results/
 coverage/
 
 ### 🔒 환경/보안 설정 파일 ###
-.env.local
+.env
 application-*.yaml
 application-*.properties
 
