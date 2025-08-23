@@ -1,7 +1,6 @@
 pipeline {
   agent any
   tools { jdk 'temurin17' }
-
   environment {
     BE_IMAGE = 'alsduq1117/payflow'
     FE_IMAGE = 'alsduq1117/payflow-frontend'
