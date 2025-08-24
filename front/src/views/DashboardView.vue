@@ -182,7 +182,7 @@ onUnmounted(() => {
           <v-card-text>
             <div class="card-head">
               <v-icon size="20" class="mr-2">mdi-timer-sand</v-icon>
-              <span class="card-title">승인 지연 한도 초과</span>
+              <span class="card-title">결제 승인 지연 건수</span>
               <v-chip size="small" class="ml-2" color="grey-lighten-2" variant="tonal">
                 > 120초
               </v-chip>
