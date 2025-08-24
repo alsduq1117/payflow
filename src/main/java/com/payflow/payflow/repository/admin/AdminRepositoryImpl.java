@@ -260,7 +260,7 @@ public class AdminRepositoryImpl implements AdminMetricsRepository, AdminOrdersR
                         po.amount.sum().coalesce(0L),
                         po.fee.sum().coalesce(0L),
                         po.amount.sum().coalesce(0L),
-                        pe.approvedAt.max()
+                        po.updatedAt.max()
                 ))
                 .from(po)
                 .join(pe).on(pe.id.eq(po.paymentEventId))
