@@ -11,8 +11,6 @@ import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.HashMap;
@@ -57,9 +55,7 @@ public class TossPaymentExecutor {
                 .extraDetails(PaymentExtraDetails.builder()
                         .type(PaymentType.fromName(response.getType()))
                         .method(PaymentMethod.fromValue(response.getMethod()))
-                        .approvedAt(OffsetDateTime.parse(response.getApprovedAt())
-                                        .atZoneSameInstant(ZoneId.of("Asia/Seoul"))
-                                        .toLocalDateTime())
+                        .approvedAt(LocalDateTime.parse(response.getApprovedAt(), DateTimeFormatter.ISO_DATE_TIME))
                         .pspRawData(jsonString)
                         .orderName(response.getOrderName())
                         .pspConfirmationStatus(PSPConfirmationStatus.of(response.getStatus()))
