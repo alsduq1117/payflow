@@ -13,8 +13,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        jdbc:
-          time_zone: Asia/Seoul
     open-in-view: false
 
   data:
