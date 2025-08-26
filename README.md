@@ -1,6 +1,6 @@
 # 🚀 Payflow
 > **디지털 콘텐츠 거래 및 결제·정산 서비스**  
-> PDF, PPT, 클론코딩 코드 등 디지털 상품을 등록하고, 결제·정산까지 이어지는 전 과정을 자동화한 플랫폼입니다.  
+> PDF, PPT, .zip 파일 등 디지털 상품을 등록하고, 결제·정산까지 이어지는 전 과정을 자동화한 플랫폼입니다.  
 <p align="center">
   <img src="https://github.com/user-attachments/assets/b3063d18-b9bf-4d45-b65c-f58111319748" width="300"/>
 </p>
