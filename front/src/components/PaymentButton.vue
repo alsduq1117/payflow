@@ -28,7 +28,15 @@ const handleCheckout = async () => {
       }),
     })
 
-    if (!response.ok) throw new Error('결제 준비 실패')
+    if (response.status === 401 || response.status === 403) {
+      alert('로그인이 필요합니다. 먼저 로그인해 주세요.')
+      return
+    }
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}))
+      throw new Error(err?.message || '결제 준비 실패')
+    }
 
     const {orderId, amount, orderName} = await response.json()
     openCheckout(orderId, amount, orderName)
