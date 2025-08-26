@@ -17,6 +17,10 @@ const generateSeed = (buyerId: number, productIds: number[]) => {
 const seed = generateSeed(2, [3, 1, 2]);
 
 const handleCheckout = async () => {
+  if (!props.buyerId) {           // ✅ 빈 값 즉시 차단
+    alert('로그인이 필요합니다. 먼저 로그인해 주세요.')
+    return
+  }
   try {
     const response = await fetch('/api/v1/checkout', {
       method: 'POST',
@@ -27,11 +31,6 @@ const handleCheckout = async () => {
         seed: seed,
       }),
     })
-
-    if (response.status === 401 || response.status === 403) {
-      alert('로그인이 필요합니다. 먼저 로그인해 주세요.')
-      return
-    }
 
     if (!response.ok) {
       const err = await response.json().catch(() => ({}))
