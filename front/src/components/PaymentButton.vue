@@ -5,19 +5,25 @@ const props = defineProps<{
   productIds: number[]
 }>()
 
-const openCheckout = (orderId, amount, orderName) => {
-  window.open(`/checkout.html?orderId=${orderId}&amount=${amount}&orderName=${orderName}`, '_blank', 'width=500,height=700')
-};
+const emit = defineEmits<{
+  (e: 'purchaseSuccess', payload: { orderId: number }): void
+}>()
 
-const generateSeed = (buyerId: number, productIds: number[]) => {
-  const sorted = [...productIds].sort((a, b) => a - b).join(',')
-  return `${buyerId}|${sorted}`
-};
+const openCheckout = (orderId: number, amount: number, orderName: string) => {
+  const returnUrl = window.location.href;
+  window.open(
+    `/checkout.html?orderId=${orderId}&amount=${amount}&orderName=${encodeURIComponent(orderName)}`,
+    '_blank',
+    'width=500,height=700'
+  )
+}
 
-const seed = generateSeed(2, [3, 1, 2]);
+const makeSeed = (buyerId: number, productIds: number[]) =>
+  `${buyerId}|${[...productIds].sort((a,b)=>a-b).join(',')}`
 
 const handleCheckout = async () => {
-  if (!props.buyerId) {           // ✅ 빈 값 즉시 차단
+  const seed = makeSeed(props.buyerId, props.productIds)
+  if (!props.buyerId) {
     alert('로그인이 필요합니다. 먼저 로그인해 주세요.')
     return
   }

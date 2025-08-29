@@ -37,6 +37,8 @@
         const orderId = urlParams.get('orderId');
         const amount = Number(urlParams.get('amount'));
         const orderName = urlParams.get('orderName');
+        const returnUrl  = urlParams.get('returnUrl');
+
 
         // ------ 주문의 결제 금액 설정 ------
         await widgets.setAmount({
@@ -76,14 +78,16 @@
             await widgets.requestPayment({
                 orderId: orderId,
                 orderName: orderName,
-                successUrl: window.location.origin + "/success.html",
-                failUrl: window.location.origin + "/fail.html",
+                successUrl: `${window.location.origin}/success.html?returnUrl=${encodeURIComponent(returnUrl ?? '')}`,
+                failUrl:    `${window.location.origin}/fail.html?returnUrl=${encodeURIComponent(returnUrl ?? '')}`,
                 customerEmail: "customer123@gmail.com",
                 customerName: "김민엽",
                 customerMobilePhone: "01012341234",
             });
         });
     }
+
+
 </script>
 </body>
 </html>
