@@ -53,5 +53,12 @@ public class Wallet extends BaseEntity {
         return paymentOrders.stream().map(order -> WalletTransaction.from(order, this.id)).collect(Collectors.toList());
     }
 
+    public static Wallet createFor(Long userId) {
+        return Wallet.builder()
+                .userId(userId)
+                .balance(BigDecimal.valueOf(1000000))  //초기 비용 100만
+                .build();
+    }
+
 
 }

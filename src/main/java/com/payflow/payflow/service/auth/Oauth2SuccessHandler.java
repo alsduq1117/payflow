@@ -29,7 +29,6 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
                                         Authentication authentication) throws IOException {
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
 
-        // 공통 JWT 토큰 생성
         String accessToken = jwtUtil.generateAccessToken(principal);
         String refreshToken = jwtUtil.generateRefreshToken(principal);
 
@@ -41,13 +40,11 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
                 .maxAge(Duration.ofDays(30))
                 .build();
 
-        // 3. 액세스 토큰 → URL Fragment로 전달
         String redirectUrl = UriComponentsBuilder.fromUriString(redirectUri)
                 .fragment("access_token=" + URLEncoder.encode(accessToken, "UTF-8")
                         + "&provider=" + principal.getProvider().name())
                 .build().toUriString();
 
-        // 4. 응답 설정
         response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
         response.sendRedirect(redirectUrl);
     }

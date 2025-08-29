@@ -1,6 +1,7 @@
 package com.payflow.payflow.exception.auth;
 
 import com.payflow.payflow.exception.CustomException;
+import org.springframework.http.HttpStatus;
 
 public class UserNotFoundException extends CustomException {
 
@@ -12,6 +13,6 @@ public class UserNotFoundException extends CustomException {
 
     @Override
     public int getStatusCode() {
-        return 0;
+        return HttpStatus.NOT_FOUND.value();
     }
 }
