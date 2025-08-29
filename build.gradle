@@ -46,7 +46,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
 
     // 데이터베이스 및 ORM 관련
     implementation 'mysql:mysql-connector-java:8.0.33'
@@ -61,6 +61,7 @@ dependencies {
     // 개발 편의 및 코드 간결화
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
     // 문서화 및 API 테스트
     asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor:3.0.0"
