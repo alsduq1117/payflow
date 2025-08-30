@@ -2,8 +2,10 @@ package com.payflow.payflow.service.auth;
 
 import com.payflow.payflow.domain.auth.AuthProvider;
 import com.payflow.payflow.domain.auth.User;
+import com.payflow.payflow.domain.cart.Cart;
 import com.payflow.payflow.domain.wallet.Wallet;
 import com.payflow.payflow.repository.auth.UserRepository;
+import com.payflow.payflow.repository.cart.CartRepository;
 import com.payflow.payflow.repository.wallet.WalletRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -20,6 +22,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private final UserRepository userRepository;
     private final WalletRepository walletRepository;
+    private final CartRepository cartRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
@@ -58,7 +61,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private User registerOAuth2User(AuthProvider provider, String name, String email) {
         User user = userRepository.save(User.createOAuth2User(email, name, provider));
         walletRepository.save(Wallet.createFor(user.getId()));
-
+        cartRepository.save(Cart.createFor(user.getId()));
         return user;
     }
 }

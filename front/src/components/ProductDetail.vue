@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 import axios from 'axios'
 import PaymentButton from '@/components/PaymentButton.vue'
-import { useAuthStore } from '@/stores/auth'
-import type {Product} from "@/types";
+import CartAddButton from '@/components/CartAddButton.vue'
 import DownloadButton from "@/components/DownloadButton.vue";
+import type {Product} from "@/types";
 
 const props = defineProps<{ productId: string }>()
 const product = ref<Product | null>(null)
@@ -44,14 +45,14 @@ onMounted(async () => {
 
         <v-row class="mt-10" align="center" justify="start">
           <template v-if="hasPurchased === false">
-            <v-btn
-              class="text-subtitle-1 font-weight-medium me-3"
+            <CartAddButton
+              :product-id="product.id"
+              class="text-subtitle-1 font-weight-bold d-flex align-center justify-center mr-2"
               style="height: 48px; min-width: 200px; border-radius: 6px; border: 1.5px solid #3478ff; color: #3478ff; background-color: #fff;"
               variant="outlined"
               elevation="0"
             >
-              장바구니 담기
-            </v-btn>
+            </CartAddButton>
 
             <PaymentButton
               :buyer-id="buyerId"
@@ -59,8 +60,6 @@ onMounted(async () => {
               class="text-subtitle-1 font-weight-bold d-flex align-center justify-center"
               style="height: 48px; min-width: 200px; border-radius: 6px; background-color: #3478ff; color: #fff;"
             >
-              바로구매
-              <v-icon size="18" class="ms-2">mdi-chevron-right</v-icon>
             </PaymentButton>
           </template>
 

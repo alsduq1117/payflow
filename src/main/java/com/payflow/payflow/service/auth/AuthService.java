@@ -1,11 +1,13 @@
 package com.payflow.payflow.service.auth;
 
 import com.payflow.payflow.domain.auth.User;
+import com.payflow.payflow.domain.cart.Cart;
 import com.payflow.payflow.domain.wallet.Wallet;
 import com.payflow.payflow.dto.auth.TokenResponse;
 import com.payflow.payflow.exception.UnAuthorizedException;
 import com.payflow.payflow.exception.auth.UserNotFoundException;
 import com.payflow.payflow.repository.auth.UserRepository;
+import com.payflow.payflow.repository.cart.CartRepository;
 import com.payflow.payflow.repository.wallet.WalletRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final WalletRepository walletRepository;
+    private final CartRepository cartRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
@@ -28,6 +31,7 @@ public class AuthService {
     public User signup(String email, String password) {
         User user = userRepository.save(User.createLocalUser(email, passwordEncoder.encode(password)));
         walletRepository.save(Wallet.createFor(user.getId()));
+        cartRepository.save(Cart.createFor(user.getId()));
         return user;
     }
 

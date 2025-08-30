@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import axios from "@/plugins/axios.ts";
+
 const props = defineProps<{
   buyerId: number
   productIds: number[]
@@ -25,22 +27,13 @@ const handleCheckout = async () => {
     return
   }
   try {
-    const response = await fetch('/api/v1/checkout', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        buyerId: props.buyerId,
-        productIds: props.productIds,
-        seed: seed,
-      }),
+    const { data } = await axios.post('/api/v1/checkout', {
+      buyerId: props.buyerId,
+      productIds: props.productIds,
+      seed,
     })
 
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}))
-      throw new Error(err?.message || '결제 준비 실패')
-    }
-
-    const {orderId, amount, orderName} = await response.json()
+    const { orderId, amount, orderName } = data
     openCheckout(orderId, amount, orderName)
   } catch (e: any) {
     alert(e.message || '결제 처리 중 오류가 발생했습니다.')
