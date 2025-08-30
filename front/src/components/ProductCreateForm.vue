@@ -73,7 +73,7 @@ const handleContentUpload = async () => {
   form.value.fileUrl = uploadedUrl
 }
 
-// 상품 등록 핸들러
+
 const submitForm = async () => {
   const isValid = await formRef.value?.validate()
   if (!isValid) return
@@ -81,7 +81,6 @@ const submitForm = async () => {
     await axios.post('/api/v1/products', form.value)
     alert('상품 등록 완료!')
     await router.push('/')
-    // 폼 초기화, 라우터 이동 등 필요 시 추가
   } catch (e) {
     alert('등록 중 오류 발생')
     console.error(e)

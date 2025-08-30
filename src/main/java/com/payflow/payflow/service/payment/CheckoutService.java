@@ -7,6 +7,7 @@ import com.payflow.payflow.domain.payment.PaymentStatus;
 import com.payflow.payflow.domain.payment.PaymentType;
 import com.payflow.payflow.domain.product.Product;
 import com.payflow.payflow.dto.payment.CheckoutResponse;
+import com.payflow.payflow.exception.payment.DuplicateOrderIdException;
 import com.payflow.payflow.repository.payment.PaymentEventRepository;
 import com.payflow.payflow.repository.payment.PaymentOrderRepository;
 import com.payflow.payflow.repository.product.ProductRepository;
@@ -27,6 +28,7 @@ public class CheckoutService {
 
     @Transactional
     public CheckoutResponse checkout(CheckoutCommand command) {
+        paymentEventRepository.findByOrderId(command.getIdempotencyKey()).ifPresent(paymentEvent -> {throw new DuplicateOrderIdException();});
         List<Product> products = productRepository.findAllById(command.getProductIds());
 
         PaymentEvent paymentEvent = createPaymentEvent(command, products);

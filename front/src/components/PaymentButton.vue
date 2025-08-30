@@ -1,16 +1,11 @@
 <script setup lang="ts">
-
 const props = defineProps<{
   buyerId: number
   productIds: number[]
 }>()
 
-const emit = defineEmits<{
-  (e: 'purchaseSuccess', payload: { orderId: number }): void
-}>()
 
 const openCheckout = (orderId: number, amount: number, orderName: string) => {
-  const returnUrl = window.location.href;
   window.open(
     `/checkout.html?orderId=${orderId}&amount=${amount}&orderName=${encodeURIComponent(orderName)}`,
     '_blank',
@@ -18,11 +13,13 @@ const openCheckout = (orderId: number, amount: number, orderName: string) => {
   )
 }
 
-const makeSeed = (buyerId: number, productIds: number[]) =>
-  `${buyerId}|${[...productIds].sort((a,b)=>a-b).join(',')}`
+const generateSeed = () => {
+  const timestamp = Math.floor(Date.now() / 10000);
+  return `${timestamp}`;
+};
 
 const handleCheckout = async () => {
-  const seed = makeSeed(props.buyerId, props.productIds)
+  const seed = generateSeed()
   if (!props.buyerId) {
     alert('로그인이 필요합니다. 먼저 로그인해 주세요.')
     return
