@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 @Getter
 @Setter
 @Builder
-public class ProductPageRequest {
+public class GetProductsRequest {
 
     private static final int MAX_PAGE = 100;
     private static final int MIN_SIZE = 200;
@@ -21,7 +21,7 @@ public class ProductPageRequest {
     private int size = 8;
 
 
-    public ProductPageRequest(int page, int size) {
+    public GetProductsRequest(int page, int size) {
         this.page = page - 1;
         this.size = size;
     }

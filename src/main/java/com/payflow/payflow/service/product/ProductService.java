@@ -23,16 +23,16 @@ public class ProductService {
     private final UserRepository userRepository;
 
     @Transactional
-    public ProductResponse create(ProductCreate productCreate, Long userId) {
+    public ProductResponse create(CreteaProductRequest creteaProductRequest, Long userId) {
 
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
         Product product = Product.builder()
-                .name(productCreate.getName())
-                .description(productCreate.getDescription())
-                .price(productCreate.getPrice())
-                .fileUrl(productCreate.getFileUrl())
-                .thumbnailUrl(productCreate.getThumbnailUrl())
+                .name(creteaProductRequest.getName())
+                .description(creteaProductRequest.getDescription())
+                .price(creteaProductRequest.getPrice())
+                .fileUrl(creteaProductRequest.getFileUrl())
+                .thumbnailUrl(creteaProductRequest.getThumbnailUrl())
                 .sellerId(userId)
                 .build();
 
@@ -46,13 +46,13 @@ public class ProductService {
         return productRepository.findByIdWithSellerNickname(productId).orElseThrow(ProductNotFound::new);
     }
 
-    public PagingResponse<ProductResponse> getList(ProductPageRequest productPageRequest) {
-        PageImpl<ProductResponse> productPage = productRepository.getProductPage(productPageRequest);
+    public PagingResponse<ProductResponse> getList(GetProductsRequest getProductsRequest) {
+        PageImpl<ProductResponse> productPage = productRepository.getProductPage(getProductsRequest);
         return new PagingResponse<>(productPage);
     }
 
     @Transactional
-    public ProductResponse edit(Long productId, @Valid ProductEdit productEdit, Long userId) {
+    public ProductResponse edit(Long productId, @Valid EditProductRequest editProductRequest, Long userId) {
 
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFound::new);
@@ -60,11 +60,11 @@ public class ProductService {
         ProductEditor.ProductEditorBuilder productEditorBuilder = product.toEditor();
 
         ProductEditor productEditor = productEditorBuilder
-                .name(productEdit.getName())
-                .price(productEdit.getPrice())
-                .description(productEdit.getDescription())
-                .price(productEdit.getPrice())
-                .thumbnailUrl(productEdit.getThumbnailUrl())
+                .name(editProductRequest.getName())
+                .price(editProductRequest.getPrice())
+                .description(editProductRequest.getDescription())
+                .price(editProductRequest.getPrice())
+                .thumbnailUrl(editProductRequest.getThumbnailUrl())
                 .build();
 
         product.edit(productEditor);

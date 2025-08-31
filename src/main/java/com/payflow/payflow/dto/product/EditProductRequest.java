@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ProductCreate {
+public class EditProductRequest {
 
     @NotBlank
     @Size(min = 1, max = 100)
@@ -27,8 +27,7 @@ public class ProductCreate {
 
     private String description;
 
-
-    public ProductCreate(String name, Integer price, String fileUrl, String thumbnailUrl, String description) {
+    public EditProductRequest(String name, Integer price, String fileUrl, String thumbnailUrl, String description) {
         this.name = name;
         this.price = price;
         this.fileUrl = fileUrl;

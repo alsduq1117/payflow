@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed,watch } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import axios from '@/plugins/axios'
 import type { Product } from '@/types/product'
 

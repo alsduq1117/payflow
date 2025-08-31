@@ -2,7 +2,7 @@ package com.payflow.payflow.repository.product;
 
 import com.payflow.payflow.domain.auth.QUser;
 import com.payflow.payflow.domain.product.QProduct;
-import com.payflow.payflow.dto.product.ProductPageRequest;
+import com.payflow.payflow.dto.product.GetProductsRequest;
 import com.payflow.payflow.dto.product.ProductResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -18,7 +18,7 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public PageImpl<ProductResponse> getProductPage(ProductPageRequest request) {
+    public PageImpl<ProductResponse> getProductPage(GetProductsRequest request) {
         QProduct product = QProduct.product;
         QUser user = QUser.user;
 

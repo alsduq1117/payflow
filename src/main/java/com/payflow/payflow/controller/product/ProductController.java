@@ -1,9 +1,8 @@
 package com.payflow.payflow.controller.product;
 
-import com.payflow.payflow.domain.auth.User;
-import com.payflow.payflow.dto.product.ProductCreate;
-import com.payflow.payflow.dto.product.ProductEdit;
-import com.payflow.payflow.dto.product.ProductPageRequest;
+import com.payflow.payflow.dto.product.CreteaProductRequest;
+import com.payflow.payflow.dto.product.EditProductRequest;
+import com.payflow.payflow.dto.product.GetProductsRequest;
 import com.payflow.payflow.dto.common.PagingResponse;
 import com.payflow.payflow.dto.product.ProductResponse;
 import com.payflow.payflow.service.auth.UserPrincipal;
@@ -23,9 +22,9 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("")
-    public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductCreate productCreate, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public ResponseEntity<ProductResponse> create(@Valid @RequestBody CreteaProductRequest creteaProductRequest, @AuthenticationPrincipal UserPrincipal userPrincipal) {
         Long userId = userPrincipal.getUser().getId();
-        ProductResponse productResponse = productService.create(productCreate, userId);
+        ProductResponse productResponse = productService.create(creteaProductRequest, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(productResponse);
     }
 
@@ -36,15 +35,15 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ResponseEntity<PagingResponse<ProductResponse>> getProductList(@ModelAttribute ProductPageRequest productPageRequest) {
-        PagingResponse<ProductResponse> productList = productService.getList(productPageRequest);
+    public ResponseEntity<PagingResponse<ProductResponse>> getProductList(@ModelAttribute GetProductsRequest getProductsRequest) {
+        PagingResponse<ProductResponse> productList = productService.getList(getProductsRequest);
         return ResponseEntity.ok(productList);
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<ProductResponse> editProduct(@PathVariable(name = "productId") Long productId, @RequestBody @Valid ProductEdit productEdit, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public ResponseEntity<ProductResponse> editProduct(@PathVariable(name = "productId") Long productId, @RequestBody @Valid EditProductRequest editProductRequest, @AuthenticationPrincipal UserPrincipal userPrincipal) {
         Long userId = userPrincipal.getUser().getId();
-        ProductResponse productResponse = productService.edit(productId, productEdit, userId);
+        ProductResponse productResponse = productService.edit(productId, editProductRequest, userId);
         return ResponseEntity.ok(productResponse);
     }
 
