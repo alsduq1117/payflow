@@ -25,7 +25,7 @@ public class Product extends BaseEntity {
 
     private String name;
 
-    private Integer price;
+    private Long price;
 
     @Column(name = "file_url")
     private String fileUrl;
@@ -42,7 +42,7 @@ public class Product extends BaseEntity {
     private LocalDateTime deletedAt;
 
     @Builder
-    public Product(String name, Integer price, String fileUrl, String thumbnailUrl, String description, Long sellerId) {
+    public Product(String name, Long price, String fileUrl, String thumbnailUrl, String description, Long sellerId) {
         this.name = name;
         this.price = price;
         this.fileUrl = fileUrl;

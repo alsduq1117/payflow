@@ -53,7 +53,7 @@ onUnmounted(() => {
   <v-container>
     <v-row class="ma-10">
       <v-col v-for="product in products" :key="product.id" cols="12" sm="6" md="3">
-        <v-card class="product-card pa-5" :to="`/product/${product.id}`" tag="router-link" hover>
+        <v-card class="product-card pa-5" :to="`/products/${product.id}`" tag="router-link" hover>
           <v-img :src="product.thumbnailUrl" height="250" cover class="mb-2" />
           <div style="display: flex; justify-content: space-between;" class="text-body-1 font-weight-medium mb-4">
             <span>{{ product.name }}</span>

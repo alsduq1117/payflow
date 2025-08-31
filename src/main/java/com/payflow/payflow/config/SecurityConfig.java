@@ -69,7 +69,8 @@ public class SecurityConfig {
                                 "/actuator/health",
                                 "/actuator/prometheus",
                                 "/api/v1/admin/**",
-                                "/api/v1/carts/cart-item/**"
+                                "/api/v1/cart/items",
+                                "/api/v1/cart/items/**"
                         ).permitAll()
                         // ADMIN 역할만 접근 가능한 경로
 //                        .requestMatchers(

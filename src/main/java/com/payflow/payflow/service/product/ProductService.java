@@ -52,7 +52,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductResponse edit(Long productId, @Valid EditProductRequest editProductRequest, Long userId) {
+    public ProductResponse edit(Long productId, EditProductRequest editProductRequest, Long userId) {
 
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFound::new);

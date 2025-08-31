@@ -17,7 +17,7 @@ public class CreteaProductRequest {
 
     @NotNull
     @Positive
-    private Integer price;
+    private Long price;
 
     @NotBlank
     private String fileUrl;
@@ -28,7 +28,7 @@ public class CreteaProductRequest {
     private String description;
 
 
-    public CreteaProductRequest(String name, Integer price, String fileUrl, String thumbnailUrl, String description) {
+    public CreteaProductRequest(String name, Long price, String fileUrl, String thumbnailUrl, String description) {
         this.name = name;
         this.price = price;
         this.fileUrl = fileUrl;

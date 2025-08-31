@@ -1,29 +1,39 @@
 package com.payflow.payflow.util;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.payflow.payflow.domain.payment.PaymentOrder;
+import com.payflow.payflow.dto.payment.CheckoutRequest;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public final class IdempotencyCreator {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper()
-            .configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true)
-            .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
-            .setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    private IdempotencyCreator() {
+    }
 
-    private IdempotencyCreator() {}
+    // 공통 UUID 변환 로직
+    private static String generateKey(String raw) {
+        return UUID.nameUUIDFromBytes(raw.getBytes(StandardCharsets.UTF_8)).toString();
+    }
 
-    public static String create(Object data) {
-        try {
-            String source = MAPPER.writeValueAsString(data);
-            byte[] bytes = source.getBytes(StandardCharsets.UTF_8);
-            return UUID.nameUUIDFromBytes(bytes).toString();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to create idempotency key", e);
-        }
+    /**
+     * PaymentOrder 기반 키 생성
+     */
+    public static String create(PaymentOrder order) {
+        String raw = order.getOrderId() + ":" + order.getSellerId() + ":" + order.getProductId() + ":" + order.getAmount();
+        return generateKey(raw);
+    }
+
+    /**
+     * CheckoutRequest 기반 키 생성
+     */
+    public static String create(CheckoutRequest request) {
+        String productPart = request.getProductIds().stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining("-"));
+
+        String raw = request.getBuyerId() + ":" + productPart + ":" + request.getSeed();
+        return generateKey(raw);
     }
 }

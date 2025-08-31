@@ -9,6 +9,7 @@ import LoginView from "@/views/LoginView.vue";
 import PaymentListView from "@/views/PaymentListView.vue";
 import SettlementView from "@/views/SettlementView.vue";
 import MonitoringDashboard from "@/views/MonitoringDashboard.vue";
+import CartView from "@/views/CartView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,7 +25,7 @@ const router = createRouter({
       component: ProductCreateForm,
     },
     {
-      path: '/product/:productId',
+      path: '/products/:productId',
       name: 'product-detail',
       component: ProductDetail,
       props: true
@@ -70,6 +71,11 @@ const router = createRouter({
       name: 'monitoring',
       component: MonitoringDashboard,
       meta: { showSidebar: true, hideHeader: false, hideFooter: true },
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: CartView,
     },
   ],
 })

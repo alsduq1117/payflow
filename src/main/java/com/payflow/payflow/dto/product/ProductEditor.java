@@ -10,7 +10,7 @@ public class ProductEditor {
 
     private String name;
 
-    private Integer price;
+    private Long price;
 
     private String fileUrl;
 
@@ -19,7 +19,7 @@ public class ProductEditor {
     private String description;
 
     @Builder
-    public ProductEditor(String name, Integer price, String fileUrl, String thumbnailUrl, String description) {
+    public ProductEditor(String name, Long price, String fileUrl, String thumbnailUrl, String description) {
         this.name = name;
         this.price = price;
         this.fileUrl = fileUrl;

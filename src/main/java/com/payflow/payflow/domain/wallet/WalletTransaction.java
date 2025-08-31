@@ -57,15 +57,15 @@ public class WalletTransaction extends BaseEntity {
         this.idempotencyKey = idempotencyKey;
     }
 
-    public static WalletTransaction from(PaymentOrder order, Long walletId) {
+    public static WalletTransaction from(PaymentOrder paymentOrder, Long walletId) {
         return WalletTransaction.builder()
                 .walletId(walletId)
-                .amount(order.getAmount())
+                .amount(paymentOrder.getAmount())
                 .type(TransactionType.CREDIT)
-                .referenceId(order.getId())
+                .referenceId(paymentOrder.getId())
                 .referenceType(ReferenceType.PAYMENT_ORDER)
-                .orderId(order.getOrderId())
-                .idempotencyKey(IdempotencyCreator.create(order)) // 수정 필요
+                .orderId(paymentOrder.getOrderId())
+                .idempotencyKey(IdempotencyCreator.create(paymentOrder)) // 수정 필요
                 .build();
     }
 

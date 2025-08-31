@@ -1,8 +1,6 @@
 package com.payflow.payflow.dto.product;
 
 import com.payflow.payflow.domain.product.Product;
-import jakarta.annotation.Nullable;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -12,7 +10,7 @@ public class ProductResponse {
 
     private final String name;
 
-    private final Integer price;
+    private final Long price;
 
     private final String fileUrl;
 
@@ -24,7 +22,7 @@ public class ProductResponse {
 
     private final String sellerNickname;
 
-    public ProductResponse(Long id, String name, Integer price, String fileUrl, String thumbnailUrl, String description, Long sellerId, String sellerNickname) {
+    public ProductResponse(Long id, String name, Long price, String fileUrl, String thumbnailUrl, String description, Long sellerId, String sellerNickname) {
         this.id = id;
         this.name = name;
         this.price = price;
