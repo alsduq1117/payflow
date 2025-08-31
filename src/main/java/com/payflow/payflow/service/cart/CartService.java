@@ -34,7 +34,7 @@ public class CartService {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Cart cart = cartRepository.findByUserId(user.getId()).orElseThrow(CartNotFoundException::new);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFound::new);
-        cartItemRepository.findCartItemByProduct(product).ifPresent(cartItem -> {throw new AlreadyAddedInCartException();});
+        cartItemRepository.findCartItemByCartAndProduct(cart,product).ifPresent(cartItem -> {throw new AlreadyAddedInCartException();});
         cartItemRepository.save(CartItem.builder()
                 .cart(cart)
                 .product(product)
