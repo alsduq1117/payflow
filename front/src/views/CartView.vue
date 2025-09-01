@@ -20,6 +20,7 @@ const allSelected = computed({
     cartItems.value.forEach(cartItem => (cartItem.selected = val))
   }
 })
+
 const selectedCount = computed(() => cartItems.value.filter(cartItem => cartItem.selected).length)
 
 const fetchCartItems = async () => {

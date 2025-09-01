@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useAuthStore } from '@/stores/auth'
+import {onMounted, ref} from 'vue'
+import {useAuthStore} from '@/stores/auth'
 import axios from 'axios'
 import PaymentButton from '@/components/PaymentButton.vue'
 import CartAddButton from '@/components/CartAddButton.vue'
@@ -34,7 +34,7 @@ onMounted(async () => {
   <v-container class="py-10" v-if="product">
     <v-row>
       <v-col cols="12" md="6">
-        <v-img :src="product.thumbnailUrl" height="400" class="rounded-lg" />
+        <v-img :src="product.thumbnailUrl" height="400" class="rounded-lg"/>
       </v-col>
 
       <v-col cols="12" md="6" class="ps-md-15">
@@ -65,7 +65,9 @@ onMounted(async () => {
 
           <!-- 결제 완료한 경우: 다운로드 버튼만 노출 -->
           <template v-else-if="hasPurchased === true">
-            <DownloadButton :file-url="product.fileUrl"/>
+            <DownloadButton :file-url="product.fileUrl"
+                            class="text-subtitle-1 font-weight-bold d-flex align-center justify-center"
+                            style="height: 48px; min-width: 450px; border-radius: 6px; background-color: #4caf50; color: #fff;"/>
           </template>
         </v-row>
       </v-col>
@@ -73,7 +75,8 @@ onMounted(async () => {
 
 
     <div class="mt-12 pt-6">
-      <v-tabs v-model="tab" grow background-color="white" color="primary" class="text-subtitle-1" slider-color="primary">
+      <v-tabs v-model="tab" grow background-color="white" color="primary" class="text-subtitle-1"
+              slider-color="primary">
         <v-tab value="details" class="text-subtitle-1">상품상세</v-tab>
         <v-tab value="reviews" class="text-subtitle-1">상품평</v-tab>
         <v-tab value="questions" class="text-subtitle-1">상품문의</v-tab>

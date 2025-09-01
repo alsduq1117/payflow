@@ -10,7 +10,6 @@ import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-public class AdminRepositoryImpl implements AdminMetricsRepository, AdminOrdersRepository, AdminSettlementRepository {
+public class AdminRepositoryImpl implements AdminRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 

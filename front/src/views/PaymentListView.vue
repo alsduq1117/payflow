@@ -2,19 +2,9 @@
 import { ref, reactive, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from '@/plugins/axios.ts'
+import type { OrderList } from "@/types/orderList.ts";
 
-type OrderStatus = 'NOT_STARTED' | 'EXECUTING' | 'SUCCESS' | 'FAILURE' | 'UNKNOWN'
 type SortDirection = 'asc' | 'desc'
-
-type OrderListItem = {
-  id: number
-  buyerNickname: string | null
-  amount: number
-  status: OrderStatus
-  method: string
-  approvedAt?: string | null
-  createdAt: string
-}
 
 type Paged<T> = {
   page: number
@@ -34,7 +24,7 @@ const dt  = (iso?: string | null) => (iso ? new Date(iso).toLocaleString() : '-'
 // 상태
 const filters = reactive({
   buyerNickname: (route.query.buyerNickname as string) ?? '',
-  status: (route.query.status as OrderStatus) ?? '' as OrderStatus | '',
+  status: (route.query.status) ?? '' as '',
   method: (route.query.method as string) ?? '',
   minAmount: route.query.minAmount ? Number(route.query.minAmount) : undefined,
   maxAmount: route.query.maxAmount ? Number(route.query.maxAmount) : undefined,
@@ -52,7 +42,7 @@ const tableOptions = reactive({
 
 const loading = ref(false)
 const errorMsg = ref<string | null>(null)
-const rows = ref<OrderListItem[]>([])
+const rows = ref<OrderList[]>([])
 const total = ref(0)
 
 // 쿼리 빌더 + URL 동기화
@@ -81,7 +71,7 @@ async function fetchOrders() {
     const query = buildQuery()
     router.replace({ query }) // URL 동기화
 
-    const { data } = await axios.get<Paged<OrderListItem>>('/api/v1/admin/orders', { params: query })
+    const { data } = await axios.get<Paged<OrderList>>('/api/v1/admin/orders', { params: query })
     rows.value = data.items
     total.value = data.totalCount
   } catch (e: any) {
