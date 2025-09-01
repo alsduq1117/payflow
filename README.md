@@ -47,16 +47,23 @@
 ---
 
 ## 🌟 주요 기능
-- **사용자**
-  - 디지털 콘텐츠 등록 (PDF, PPT, ZIP 등)
-  - 안전한 결제 및 결제 내역 확인
-  - 마이페이지에서 구매 내역 관리  
+- **결제/정산**
+  - 토스페이먼츠 PG 연동 (Checkout → 승인 → 결제 확정)
+  - IdempotencyKey 기반 중복 결제 방지
+  - Wallet · Ledger 도메인 분리 (지갑 거래 내역 & 장부 기록 관리)
 
-- **관리자**
-  - 주문/결제/정산 프로세스 실시간 관리
-  - 정산 자동화 (Batch 기반)
-  - Prometheus + Grafana 기반 운영 모니터링  
+- **콘텐츠 관리**
+  - S3 Presigned URL 기반 파일 업로드 (썸네일/콘텐츠)
+  - 디지털 상품 등록 및 구매 기능
+  - 장바구니 기능 구현
 
+- **보안/인증**
+  - OAuth2 소셜 로그인 (Google, Kakao, Naver) + JWT 인증/인가
+  - 결제 Webhook 검증 및 보안 처리
+
+- **구조/설계**
+  - Querydsl 기반 동적 쿼리
+  - 이벤트 기반 비동기 처리 (`@TransactionalEventListener`)
 ---
 
 ## 📷 스크린샷
