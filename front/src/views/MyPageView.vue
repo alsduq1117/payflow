@@ -60,16 +60,16 @@ onMounted(() => {
       주문 내역이 없습니다.
     </div>
 
-    <router-link
+    <v-card
       v-for="order in orderItems"
       :key="order.id"
-      :to="`/products/${order.productId}`"
-      class="text-decoration-none text-black"
+      class="d-flex align-center pa-4 mb-4"
+      outlined
+      elevation="1"
     >
-      <v-card
-        class="d-flex align-center pa-4 mb-4"
-        outlined
-        elevation="1"
+      <router-link
+        :to="`/products/${order.productId}`"
+        class="d-flex align-center flex-grow-1 text-decoration-none text-black"
       >
         <!-- 썸네일 -->
         <v-img
@@ -91,17 +91,19 @@ onMounted(() => {
             구매확정
           </div>
         </div>
+      </router-link>
 
-        <!-- 버튼 영역 -->
-        <div class="d-flex flex-column gap-2">
-          <DownloadButton :file-url="order.fileUrl"
-                          class="mb-2"
-                          color="#3478ff"
-                          size="small">다운로드
-          </DownloadButton>
-          <v-btn variant="outlined" size="small">구매평 작성</v-btn>
-        </div>
-      </v-card>
-    </router-link>
+      <!-- 버튼 영역 -->
+      <div class="d-flex flex-column gap-2">
+        <DownloadButton :file-url="order.fileUrl"
+                        class="mb-2"
+                        color="#3478ff"
+                        size="small"
+        >
+          다운로드
+        </DownloadButton>
+        <v-btn variant="outlined" size="small">구매평 작성</v-btn>
+      </div>
+    </v-card>
   </v-container>
 </template>
