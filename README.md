@@ -103,3 +103,8 @@
 
 ---
 
+### 마이페이지
+<img src="https://github.com/user-attachments/assets/ca7621b0-697c-428d-aa04-58bdf8f441c0" width="600"/>
+
+---
+
