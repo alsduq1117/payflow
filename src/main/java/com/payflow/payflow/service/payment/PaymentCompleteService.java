@@ -2,7 +2,7 @@ package com.payflow.payflow.service.payment;
 
 import com.payflow.payflow.domain.ledger.LedgerEntryCompletedEvent;
 import com.payflow.payflow.domain.payment.PaymentOrder;
-import com.payflow.payflow.domain.wallet.SettlementCompltedEvent;
+import com.payflow.payflow.domain.wallet.SettlementCompletedEvent;
 import com.payflow.payflow.repository.payment.PaymentEventRepository;
 import com.payflow.payflow.repository.payment.PaymentOrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class PaymentCompleteService {
     private final PaymentEventRepository paymentEventRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void completePayment(SettlementCompltedEvent event) {
+    public void completePayment(SettlementCompletedEvent event) {
         paymentOrderRepository.markWalletUpdated(event.getOrderId());
 
         List<PaymentOrder> paymentOrders = paymentOrderRepository.findByOrderId(event.getOrderId());

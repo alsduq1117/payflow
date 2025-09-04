@@ -1,8 +1,7 @@
 package com.payflow.payflow.service.payment;
 
 import com.payflow.payflow.domain.ledger.LedgerEntryCompletedEvent;
-import com.payflow.payflow.domain.payment.PaymentConfirmationSuccessEvent;
-import com.payflow.payflow.domain.wallet.SettlementCompltedEvent;
+import com.payflow.payflow.domain.wallet.SettlementCompletedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -18,16 +17,14 @@ public class PaymentEventHandler {
     private final PaymentCompleteService paymentCompleteService;
 
     @Async
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, classes = SettlementCompltedEvent.class)
-    public void onSettlementCompleted(SettlementCompltedEvent event) {
-        log.info("Received settlement completed event: {}", event);
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, classes = SettlementCompletedEvent.class)
+    public void onSettlementCompleted(SettlementCompletedEvent event) {
         paymentCompleteService.completePayment(event);
     }
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, classes = LedgerEntryCompletedEvent.class)
     public void onLedgerEntryCompleted(LedgerEntryCompletedEvent event) {
-        log.info("Received ledger entry completed event: {}", event);
         paymentCompleteService.completePayment(event);
     }
 }

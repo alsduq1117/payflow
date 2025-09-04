@@ -2,7 +2,7 @@ package com.payflow.payflow.service.wallet;
 
 import com.payflow.payflow.domain.payment.PaymentConfirmationSuccessEvent;
 import com.payflow.payflow.domain.payment.PaymentOrder;
-import com.payflow.payflow.domain.wallet.SettlementCompltedEvent;
+import com.payflow.payflow.domain.wallet.SettlementCompletedEvent;
 import com.payflow.payflow.domain.wallet.Wallet;
 import com.payflow.payflow.domain.wallet.WalletTransaction;
 import com.payflow.payflow.repository.payment.PaymentOrderRepository;
@@ -10,9 +10,7 @@ import com.payflow.payflow.repository.wallet.WalletRepository;
 import com.payflow.payflow.repository.wallet.WalletTransactionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +50,6 @@ public class WalletService {
         walletRepository.saveAll(wallets);
         walletTransactionRepository.saveAll(transactions);
 
-        eventPublisher.publishEvent(new SettlementCompltedEvent(event.getOrderId()));
+        eventPublisher.publishEvent(new SettlementCompletedEvent(event.getOrderId()));
     }
 }

@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SettlementCompltedEvent {
+public class SettlementCompletedEvent {
 
     private String orderId;
 
     @Builder
-    public SettlementCompltedEvent(String orderId) {
+    public SettlementCompletedEvent(String orderId) {
         this.orderId = orderId;
     }
 }
